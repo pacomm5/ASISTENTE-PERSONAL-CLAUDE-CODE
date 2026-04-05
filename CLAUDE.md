@@ -45,8 +45,8 @@ Las skills se construyen de forma orgánica cuando aparece un flujo de trabajo r
 **Backlog de skills por crear** (basado en las tareas más repetitivas de Paco):
 
 1. `extraer-datos-powerbi` — Extracción y transformación de datos del DMS Quiter para cargar en Power BI
-2. `marketing-predictivo` — Scripts de análisis predictivo sobre datos de postventa
-3. `actualizar-base-datos` — Flujo para actualizar bases de datos de Jarmauto o PlayersHubs
+2. `marketing-predictivo` — Scripts de análisis predictivo sobre datos de postventa *(tarea mensual: día 1 de cada mes)*
+3. `actualizar-base-datos` — Flujo para actualizar bases de datos de Jarmauto o PlayersHubs *(tarea mensual: día 1 de cada mes)*
 4. `borrador-correo` — Redactar borradores de correos profesionales con el tono adecuado
 5. `ejecutar-script` — Ejecutar y depurar scripts de Python a demanda
 
