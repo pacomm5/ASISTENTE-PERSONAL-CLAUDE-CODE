@@ -40,7 +40,11 @@ Resumen: DMS Quiter, Power BI, Excel, Python/VS Code, Google Cloud, Railway, Not
 
 Las skills viven en `.claude/skills/`. Cada skill tiene su carpeta con un archivo `SKILL.md`.
 
-Las skills se construyen de forma orgánica cuando aparece un flujo de trabajo recurrente. No hay skills todavía.
+Las skills se construyen de forma orgánica cuando aparece un flujo de trabajo recurrente.
+
+**Skills activas:**
+
+- `informe-seguimiento` — Genera un Word (.docx) de seguimiento de instalación o persona con los capítulos estándar de Jarmauto (proactividad comercial, digital, calidad, procesos, recursos generales, tareas pendientes), destacando positivos y puntos a mejorar.
 
 **Backlog de skills por crear** (basado en las tareas más repetitivas de Paco):
 
