@@ -41,7 +41,9 @@ Los rankings de referencia están guardados en el vault en `Areas/Trabajo Postve
 4. **Procesos** — Sin datos (dejar vacío salvo que el usuario aporte información)
 5. **Recursos generales** — Sin datos (dejar vacío salvo que el usuario aporte información)
 6. **Horch Lauden** — Posición en la competición de marca (menor = mejor). Sección propia porque el sentido es inverso al resto.
-7. **Tareas pendientes** — Tabla con columnas: Tarea, Responsable, Fecha límite
+7. **Cuadro de Calidad CX 2026** — KPIs de remuneración CX de la instalación asignada, con puntuación obtenida, umbrales de referencia y clasificación positivo/mejorar. Fuente: `Ranking CX Instalaciones - AAAA-MM.md`
+8. **ONE KVPS** — Score SEM, Service CAM Acum., Diferidos Acum., Multimedia Acum. con clasificación positivo/mejorar
+9. **Tareas pendientes** — Tabla con columnas: Tarea, Responsable, Fecha límite
 
 **Clasificación positivo/mejorar (asesores):**
 - Desgaste total: por debajo de 200 pts → mejorar (seguimiento prioritario)
@@ -62,7 +64,7 @@ Los rankings de referencia están guardados en el vault en `Areas/Trabajo Postve
 
 ### B) Informe de Jefe de Taller (instalación)
 
-**Secciones (9):**
+**Secciones (11):**
 
 1. **Proactividad comercial** — Datos Iron Man (desgaste + variaciones) + datos ICC módulo Proactividad
 2. **Digital** — Datos ICC módulo Digital
@@ -72,7 +74,9 @@ Los rankings de referencia están guardados en el vault en `Areas/Trabajo Postve
 6. **Carrocería** — Datos ICC módulo Carrocería
 7. **Personas** — Datos ICC módulo Personas
 8. **Rankings de marca** — Posición global ICC + Iron Man ICC puesto + Horch Lauden
-9. **Tareas pendientes** — Tabla con columnas: Tarea, Responsable, Fecha límite
+9. **Cuadro de Calidad CX 2026** — KPIs de remuneración CX de la instalación, con puntuación obtenida, umbrales de referencia y clasificación positivo/mejorar. Fuente: `Ranking CX Instalaciones - AAAA-MM.md`
+10. **ONE KVPS** — Score SEM, Service CAM Acum., Diferidos Acum., Multimedia Acum. con clasificación positivo/mejorar
+11. **Tareas pendientes** — Tabla con columnas: Tarea, Responsable, Fecha límite
 
 **Detalle sección Proactividad comercial:**
 - Instalaciones de **mecánica** (Rivas Audi, Moncloa VW, Moncloa Audi, Ayala, Vara, Canarias, Rivas VW): desgaste total con posición ranking (referencia: <220% es seguimiento prioritario) + detalle por categoría + Var Rec 2A + Var MO 2A + indicadores ICC
@@ -97,6 +101,116 @@ Los rankings de referencia están guardados en el vault en `Areas/Trabajo Postve
 - Industriales → 30070 LCV
 
 **Caso especial — Industriales (Fernando):** solo datos ICC, sin datos Iron Man. Procesos y Rankings de marca vacíos.
+
+---
+
+## ONE KVPS
+
+Sistema de seguimiento semanal de satisfacción del cliente. Se incluye como sección propia en todos los informes mensuales, antes de Tareas pendientes.
+
+**Fuentes de datos:**
+- `Areas/Trabajo Postventa/Ranking ONE Instalaciones - AAAA-SNN.md`
+- `Areas/Trabajo Postventa/Ranking ONE Asesores - AAAA-SNN.md`
+
+**KPIs incluidos (4):** Score SEM, Service CAM Acum., Diferidos Acum., Multimedia Acum.
+
+**Umbrales de clasificación:**
+
+| KPI | Positivo | Regular (mejorar) | Mejorar |
+|---|---|---|---|
+| Score SEM | Por encima de la media del equipo | — | Por debajo de la media |
+| Service CAM Acum. | ≥8% | 5-8% | <5% |
+| Diferidos Acum. | ≥8% | 5-8% | <5% |
+| Multimedia Acum. | ≥5 | 3-5 | <3 |
+
+Cada bullet incluye el valor, la media del equipo y la descripción del rango.
+
+**Medias de referencia (actualizables cada semana):**
+- Asesores: Score 5,8 | CAM 6% | Diferidos 12% | Multimedia 5,6
+- Instalaciones: Score 6,9 | CAM 6% | Diferidos 11% | Multimedia 6,0
+
+**Mapeo instalaciones ONE (códigos KVPS):**
+- 31523 → Moncloa (aplica a Moncloa VW y Moncloa Audi)
+- 00158 → Rivas Audi (solo informe de Emilio, no chapa)
+- 00159 → Ayala
+- 00160 → Rivas Canarias (solo informe de Izquierdo, no chapa)
+- 00982 → Vara
+- 30070 → Industriales + Rivas VW (el mismo código aplica a los dos informes de Fernando)
+
+Las instalaciones de chapa (Luis Ramos, Pericles) no tienen código ONE: sección con "Sin datos registrados".
+
+**José María Campos:** aparece en el ranking ONE de asesores (ASP). Su dato ONE va a su informe de asesor (`informe_seguimiento_jose_maria_AAAA-MM.docx`), no a sus informes de jefe de taller.
+
+---
+
+## Cuadro de Calidad CX 2026
+
+Sistema de remuneración cuatrimestral de marca (Audi, VW Turismos, VW Comerciales). Máximo 8 puntos por instalación. Fuente: `Areas/Trabajo Postventa/Ranking CX Instalaciones - AAAA-MM.md`.
+
+**Clasificación:** 2 pts = positivo; 0 o 1 pt = mejorar. Incluir el valor actual, la puntuación obtenida y los umbrales de referencia en cada línea.
+
+**Para asesores con dos instalaciones** (Guillermo, Javier Pina, Nuria → 30070 VW + 30070 LCV; Raúl Muñoz, José María Campos asesor → 31523 AU + 31523 VW): insertar dos bloques uno debajo del otro, identificados por instalación.
+
+### Umbrales Audi Service
+
+| KPI | 0 pts | 1 pt | 2 pts |
+|---|---|---|---|
+| CEM Q4 (Satisfacción General) | <4,60 | ≥4,60 | ≥4,80 |
+| EC28 (Medidas de Servicio) | >5% | ≤5% | ≤1% |
+| Conectividad Posventa (ASR) | <25% | ≥25% | ≥45% |
+| TRS / Información Proceso (Encuesta) | <80% | ≥80% | ≥90% |
+
+Remuneración: ≥7pts: 6-7 €/h | 6pts: 5-6 €/h | 5pts: 4-5 €/h | 4pts: 3-4 €/h
+
+### Umbrales VW Turismos
+
+| KPI | 0 pts | 1 pt | 2 pts |
+|---|---|---|---|
+| Google Business Profile (% Respuestas) | <80% | ≥80% | 100% |
+| EC28 (Medidas de Servicio) | >5% | ≤5% | ≤3% |
+| Conectividad (ASS Activado) | <25% | ≥25% | ≥40% |
+| Club Volkswagen (% Adhesión) | <3% | ≥3% | ≥6% |
+
+Remuneración: ≥7pts: 3-3,5 €/h | 6pts: 2,5-3 €/h | 5pts: 2-2,5 €/h | 4pts: 1,5-2 €/h
+
+### Umbrales VW Vehículos Comerciales
+
+| KPI | 0 pts | 1 pt | 2 pts |
+|---|---|---|---|
+| Satisfacción General (CEM) | <4,52 | ≥4,52 | ≥4,62 |
+| EC28 (Medidas de Servicio) | >5% | ≤5% | ≤3% |
+| Conectividad Posventa (ASS) | <10% | ≥10% | ≥25% |
+| Servicios Rápidos (en el día) | <40% | ≥40% | ≥45% |
+
+Remuneración: ≥7pts: 6-6,5 €/h | 6pts: 5-5,5 €/h | 5pts: 4-4,5 €/h | 4pts: 3-3,5 €/h
+
+### Mapeo asesor → instalación CX
+
+| Asesor | Código(s) CX |
+|---|---|
+| Alvaro, Estefanía, Codru, Dennis | 51AQ1 AU |
+| Alberto Martínez (asesor), Carlos Aguilar | 51AQ2 AU |
+| Magán, Taboada, Alejandro, Jon | 51AQ3 AU |
+| Javier Díaz Mesa, José María Vázquez, Juan | 0311Q VW |
+| Raúl Muñoz, José María Campos (asesor) | 31523 AU + 31523 VW |
+| Guillermo, Javier Pina, Nuria | 30070 VW + 30070 LCV |
+
+### Mapeo jefe de taller → instalación CX
+
+| Jefe | Informe | Código CX |
+|---|---|---|
+| Emilio | Rivas Audi | 51AQ1 AU |
+| Luis Ramos | Rivas Audi Chapa | 51AQ1 AU |
+| Luis Ramos | Rivas VW Chapa | 30070 VW |
+| Izquierdo | Canarias | 51AQ3 AU |
+| Pericles | Canarias Chapa | 51AQ3 AU |
+| Pericles | Vara Chapa | 0311Q VW |
+| Alberto Martínez | Ayala | 51AQ2 AU |
+| Carlos | Vara | 0311Q VW |
+| José María Campos | Moncloa VW | 31523 VW |
+| José María Campos | Moncloa Audi | 31523 AU |
+| Fernando | Rivas VW | 30070 VW |
+| Fernando | Industriales | 30070 LCV |
 
 ---
 

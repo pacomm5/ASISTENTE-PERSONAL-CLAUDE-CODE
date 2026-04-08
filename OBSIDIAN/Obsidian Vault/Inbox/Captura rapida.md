@@ -33,8 +33,19 @@ _(Añade aquí lo que vaya apareciendo. Vacía esto regularmente.)_
 		2. Los guardo en el vault como archivos de referencia con el nuevo periodo (por ejemplo `- 2026-04.md`)
 		3. Genero todos los informes Word con los datos nuevos, mostrando la evolución respecto a los de marzo donde corresponda
 		4. La tarea "Utilizar el Laser de desgaste" va incluida de serie en todos los informes
+	1. Sí. El flujo está completamente documentado en el SKILL.md y el SOP, y las reglas clave están en la memoria persistente.
 
-Lo único que necesito que me confirmes en ese momento es si hay cambios en el equipo (altas, bajas, cambios de instalación) o si quieres añadir alguna tarea nueva fija. El resto lo ejecuto directamente.
+	Lo único que necesitaré el mes que viene es que me pases los rankings nuevos (tal como indica el SOP Paso 1): los 5 rankings mensuales + los 2 rankings ONE de la semana de referencia. Con eso:
+
+	1. Los guardo en el vault
+	2. Leo los informes de marzo para arrastrar las tareas con Grado de cumplimentación < 100%
+	3. Genero los 30 informes con los datos nuevos, incluyendo la sección ONE clasificada con las medias recalculadas del nuevo periodo
+
+	La única cosa que no puedo hacer solo es acceder al DMS o al sistema ONE directamente. Los datos los tienes que exportar tú.
+
+	Lo único que necesito que me confirmes en ese momento es si hay cambios en el equipo (altas, bajas, cambios de instalación) o si quieres añadir alguna tarea nueva fija. El resto lo ejecuto directamente.
+- posibles mecánico prácticas. 
+	- tres en rivas audi
 
 ---
 

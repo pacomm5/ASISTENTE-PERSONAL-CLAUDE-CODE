@@ -33,6 +33,9 @@ Pasar los siguientes rankings en este orden:
 | Ranking Iron Man Asesores | 18 asesores activos | `Areas/Trabajo Postventa/Ranking Iron Man Asesores - AAAA-MM.md` |
 | Ranking Iron Man Jefes Taller | 11 instalaciones | `Areas/Trabajo Postventa/Ranking Iron Man Jefes Taller - AAAA-MM.md` |
 | Ranking ICC Instalaciones | 8 instalaciones (incluye Industriales) | `Areas/Trabajo Postventa/Ranking ICC Instalaciones - AAAA-MM.md` |
+| Ranking ONE Instalaciones | 6 instalaciones con código KVPS | `Areas/Trabajo Postventa/Ranking ONE Instalaciones - AAAA-SNN.md` |
+| Ranking ONE Asesores | 18 asesores (incluye José María Campos como ASP) | `Areas/Trabajo Postventa/Ranking ONE Asesores - AAAA-SNN.md` |
+| Ranking CX Instalaciones | 8 instalaciones (Audi, VW Turismos, VW Comerciales) | `Areas/Trabajo Postventa/Ranking CX Instalaciones - AAAA-MM.md` |
 
 Claude guardará cada ranking en el vault antes de generar los informes.
 
@@ -85,6 +88,7 @@ Total: 30 archivos `.docx` en `/Users/franciscomartin/Documents/ASISTENTE PERSON
 | Procesos | Sin datos salvo que se aporten |
 | Recursos generales | Sin datos salvo que se aporten |
 | Horch Lauden | Iron Man Horch Lauden |
+| ONE KVPS | Ranking ONE Asesores (Score SEM, CAM, Diferidos, Multimedia) |
 | Tareas pendientes | Arrastradas del periodo anterior si no tienen check |
 
 ### Jefes de taller
@@ -99,6 +103,7 @@ Total: 30 archivos `.docx` en `/Users/franciscomartin/Documents/ASISTENTE PERSON
 | Carrocería | ICC módulo Carrocería |
 | Personas | ICC módulo Personas |
 | Rankings de marca | Posición global ICC + Iron Man ICC puesto + Horch Lauden |
+| ONE KVPS | Ranking ONE Instalaciones (Score SEM, CAM, Diferidos, Multimedia) |
 | Tareas pendientes | Arrastradas del periodo anterior si no tienen check |
 
 ---
