@@ -80,6 +80,12 @@ Datos de la Normativa de Remuneración Customer Experience 2026. Máximo 8 punto
 
 ---
 
+## Referencias de proceso
+
+- [[Recursos/Proceso - Conectividad Posventa VW 2026|Conectividad Posventa VW 2026]] — Mecánica de cálculo, casuísticas y novedades del indicador
+
+---
+
 ## Notas de aplicación
 
 - Los datos CX son por instalación, no por persona. Cada asesor hereda el cuadro CX de su instalación.

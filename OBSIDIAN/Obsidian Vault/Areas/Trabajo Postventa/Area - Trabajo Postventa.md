@@ -100,6 +100,13 @@ Los asesores de servicio con bajo rendimiento en ventas de desgaste requieren se
 
 ---
 
+## Referencias de proceso
+
+- [[Recursos/Proceso - Conectividad Posventa VW 2026|Conectividad Posventa VW 2026]] — Mecánica del indicador CX, casuísticas y novedades 2026
+- [[Recursos/Proceso - Programa TALENTIA|Programa TALENTIA]] — Incorporación de jóvenes talentos de FP con certificación de marca
+
+---
+
 ## Investigaciones relacionadas
 
 - [[Investigaciones/Investigacion - Arquitectura Docker para apps|Arquitectura Docker]] — Para automatizaciones internas futuras

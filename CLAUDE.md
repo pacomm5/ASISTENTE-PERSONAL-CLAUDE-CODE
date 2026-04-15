@@ -45,6 +45,7 @@ Las skills se construyen de forma orgánica cuando aparece un flujo de trabajo r
 **Skills activas:**
 
 - `informe-seguimiento` — Genera un Word (.docx) de seguimiento de instalación o persona con los capítulos estándar de Jarmauto (proactividad comercial, digital, calidad, procesos, recursos generales, tareas pendientes), destacando positivos y puntos a mejorar.
+- `informe-cex` — Genera el Informe de Seguimiento CEX, documento único consolidado con todas las instalaciones: Calidad ICC (con media y Top20 de red), CEM Carrocería y Cuadro de Calidad CX 2026.
 
 **Backlog de skills por crear** (basado en las tareas más repetitivas de Paco):
 

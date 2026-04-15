@@ -48,6 +48,7 @@ Es una oportunidad de posicionamiento profesional relevante. No es una ponencia 
 | Crear guión o esquema de la presentación | Pendiente |
 | Preparar diapositivas | Pendiente |
 | Ensayo / revisión del mensaje | Pendiente |
+| Material mesa redonda (conceptos + esquema + postventa) | Completado |
 | Presentación final | 22 abril 2026 |
 
 ---
@@ -72,7 +73,7 @@ Es una oportunidad de posicionamiento profesional relevante. No es una ponencia 
 
 ## Tareas
 
-- [ ] Confirmar que Diego (ELO) ha enviado la presentación para poder ensayarla
+- [x] Confirmar que Diego (ELO) ha enviado la presentación para poder ensayarla
 - [ ] Definir el mensaje principal y el arco narrativo de la presentación
 - [ ] Decidir el formato (solo diapositivas, demo, caso real en vivo)
 - [ ] Preparar el esquema completo de la presentación
@@ -84,12 +85,13 @@ Es una oportunidad de posicionamiento profesional relevante. No es una ponencia 
 
 ## Decisiones tomadas
 
-_(Añadir aquí las decisiones a medida que se tomen)_
+hoy tengo el briefing con ELO para ver como vamos a ensayar la presentacion. 
 
 ---
 
 ## Recursos y referencias
 
+- [[Recursos/Mesa Redonda - IA Ponencia 22 abril|Mesa redonda — IA, automatización e irrelevancia]] — Conceptos, esquema y aplicación a postventa para la mesa redonda posterior
 - [[Investigaciones/Investigacion - Segmentacion RFM postventa|Segmentación de clientes en postventa]] — Caso de uso concreto para ilustrar el análisis RFM
 - [[Areas/Data y Automatizacion/Area - Data y Automatizacion|Data y Automatización]] — Stack técnico utilizado
 - [[Areas/Trabajo Postventa/Area - Trabajo Postventa|Trabajo Postventa]] — Contexto del negocio

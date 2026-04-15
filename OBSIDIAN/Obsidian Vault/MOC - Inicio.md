@@ -6,7 +6,7 @@ tags:
   - moc
   - inicio
 created: 2026-04-05
-updated: 2026-04-05
+updated: 2026-04-13
 ---
 
 # MOC — Inicio
@@ -35,6 +35,7 @@ Todo lo que aparezca y no tengas tiempo de clasificar: [[Inbox/Captura rapida]].
 | Prioridad                                                          | Descripción                                                                  | Fecha límite        |
 | ------------------------------------------------------------------ | ---------------------------------------------------------------------------- | ------------------- |
 | [[Proyectos/Presentacion Data Science\|Presentación Data Science]] | Presentación ante ~100 personas del sector como experto en postventa e IA/ML | 22 abril 2026       |
+| [[Proyectos/Proyecto - Implantación ELSA2GO\|Implantación ELSA2GO]] | Arranca hoy en Rivas Audi y Rivas VW, activación el 20 abril              | 20 abril 2026       |
 | Seguimiento asesores de desgaste                                   | Asesores por debajo del objetivo en neumáticos y frenos                      | Seguimiento mensual |
 | [[Proyectos/PlayersHubs\|PlayersHubs]] — Reconstrucción            | Rehaciendo la app desde cero con mejor arquitectura                          | Sin fecha fija      |
 | Mantener rumbo en objetivos anuales                                | Mano de obra, recambios y calidad van bien                                   | Cierre de año       |
@@ -47,6 +48,10 @@ Todo lo que aparezca y no tengas tiempo de clasificar: [[Inbox/Captura rapida]].
 |---|---|---|
 | [[Proyectos/Presentacion Data Science\|Presentación Data Science]] | Preparación en curso | Definir estructura y contenido |
 | [[Proyectos/PlayersHubs\|PlayersHubs]] | En curso | Definir arquitectura técnica inicial |
+| [[Proyectos/Proyecto - Implantación ELSA2GO\|Implantación ELSA2GO]] | En implantación | Jornadas 14-15 abril, activación el 20 abril |
+| [[Proyectos/Proyecto - Chatbot WhatsApp ONE\|Chatbot WhatsApp ONE]] | Aprobado, pendiente de arrancar | Coordinar inicio con ChatbotChocolate |
+| [[Proyectos/Proyecto - Chatbot Dudas Tecnicas\|Chatbot Dudas Técnicas]] | Pendiente de arrancar | Definir tecnología y arquitectura |
+| [[Proyectos/Proyecto - TALENTIA Rivas Audi 2026\|TALENTIA Rivas Audi 2026]] | En valoración | Confirmar nombre del candidato |
 
 ---
 
