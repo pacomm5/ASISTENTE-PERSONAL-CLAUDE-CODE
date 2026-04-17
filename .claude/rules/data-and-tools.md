@@ -17,5 +17,7 @@
 
 ## MCP / Integraciones
 
-- Actualmente no hay servidores MCP conectados a Claude Code.
-- Cuando se conecte uno, actualizar este archivo con su nombre y propósito.
+| Servidor MCP | Estado | Propósito |
+|---|---|---|
+| `mcp__notion__*` | Conectado | API oficial de Notion — leer y escribir páginas, bases de datos y bloques del workspace "Notion de Paco Martin" |
+| `mcp__claude_ai_Notion__*` | Conectado | Integración nativa de Claude.ai con Notion |

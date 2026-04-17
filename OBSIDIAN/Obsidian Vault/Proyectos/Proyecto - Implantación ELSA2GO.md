@@ -59,6 +59,9 @@ La implantación la lidera la marca (Volkswagen Group España Distribución).
 
 ## Próximos pasos
 
-- [ ] Seguimiento de las jornadas de formación (13-15 abril)
+- [x] Seguimiento de las jornadas de formación (13-15 abril)
 - [ ] Validar que el sistema está operativo el 20 de abril
+- [ ] Hacer el resumen de la implantación (audio disponible en Gemini)
+- [ ] Hablar con Emilio y Fernando (garantía) para definir el protocolo de trabajo con ELSA2GO
 - [ ] Planificar la implantación en el resto de instalaciones
+- [ ] hacer manual de procedimiento. 

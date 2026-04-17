@@ -56,7 +56,6 @@ _(Añade aquí lo que vaya apareciendo. Vacía esto regularmente.)_
 		- donde viven.
 	- **uno en Canarias. se quedaría en canarias. ya me ha mandado la documentacion izquierdo. se la he mandado a Alejandra y en principio todo OK. en principio para primero de mes.** 
 	- TOTAL 8
-- ver con wurth lo de las lunas, reparacion de lunas. 
 
 ---
 
