@@ -21,3 +21,4 @@
 |---|---|---|
 | `mcp__notion__*` | Conectado | API oficial de Notion — leer y escribir páginas, bases de datos y bloques del workspace "Notion de Paco Martin" |
 | `mcp__claude_ai_Notion__*` | Conectado | Integración nativa de Claude.ai con Notion |
+| `mcp__google-calendar__*` | Conectado | Google Calendar vía `@cocal/google-calendar-mcp` — leer, crear, editar y borrar eventos en todos los calendarios de pacomm5@gmail.com |
