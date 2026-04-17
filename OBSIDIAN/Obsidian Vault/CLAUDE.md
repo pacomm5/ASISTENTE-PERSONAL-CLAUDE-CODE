@@ -64,7 +64,7 @@ DMS Quiter · Power BI · Excel · Python/VS Code · Notion · Google Cloud · R
 
 ### Nombres de archivo
 
-- Notas diarias: formato `AAAA-MM-DD.md` (ejemplo: `2026-04-05.md`)
+- Diario: único archivo `Diario/Diario.md` (no hay archivos por fecha)
 - Notas de proyecto: nombre descriptivo en minúsculas con guiones (ejemplo: `estrategia-postventa-q2.md`)
 - Sin caracteres especiales en nombres de archivo
 
@@ -127,7 +127,7 @@ Estructura activa a fecha 2026-04-05:
 ├── MOC - Aprendizaje.md             — Programación, herramientas, aprendizaje
 ├── MOC - Personal.md                — Mapa de notas personales
 ├── .claude/skills/                  — Skills de Claude Code (obsidian-markdown, obsidian-bases, json-canvas, obsidian-cli, defuddle)
-├── Diario/                          — Notas diarias (AAAA-MM-DD.md)
+├── Diario/                          — Diario único (Diario.md)
 ├── Proyectos/                       — Proyectos activos
 │   ├── PlayersHubs.md
 │   ├── Presentacion Data Science.md — Urgente: 22 abril 2026
