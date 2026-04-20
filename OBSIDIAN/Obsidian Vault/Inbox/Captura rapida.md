@@ -53,7 +53,8 @@ _(Añade aquí lo que vaya apareciendo. Vacía esto regularmente.)_
 	- uno en rivas volkswagen
 		- donde viven.
 	- dos vara. 1 se quedaría en vara.
-		- donde viven.
+		- De uno ya he enviado los datos a Alejandra. 
+		- el otro entiendo que está dificil, porque dice que tiene que hablar con su padre. 
 	- **uno en Canarias. se quedaría en canarias. ya me ha mandado la documentacion izquierdo. se la he mandado a Alejandra y en principio todo OK. en principio para primero de mes.** 
 	- TOTAL 8
 
