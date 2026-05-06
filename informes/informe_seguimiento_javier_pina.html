@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<title>Seguimiento Rivas VW — Abril 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #F0F2F5; color: #222; }
+.page { max-width: 960px; margin: 0 auto; background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+
+/* Header */
+.header { background: #1A2B4A; color: #fff; padding: 28px 40px 20px; }
+.header h1 { font-size: 20px; font-weight: 700; letter-spacing: .5px; margin-bottom: 4px; }
+.header .sub { font-size: 13px; color: #A8B8D0; }
+.header .fecha { font-size: 11px; color: #7A90B0; margin-top: 3px; }
+
+/* Tabs */
+.tab-nav { display: flex; background: #131f35; overflow-x: auto; }
+.tab-btn { padding: 11px 20px; cursor: pointer; color: #8A9BB5; font-size: 12.5px;
+           font-weight: 600; border: none; background: none; border-bottom: 3px solid transparent;
+           white-space: nowrap; letter-spacing: .2px; }
+.tab-btn:hover { color: #D0DCF0; }
+.tab-btn.active { color: #fff; border-bottom-color: #4A90D9; background: #1A2B4A; }
+.tab-content { display: none; padding: 28px 36px; }
+.tab-content.active { display: block; }
+
+/* Secciones */
+.section { margin-bottom: 22px; border-radius: 7px; border: 1px solid #E5E8EE; overflow: hidden; }
+.section-title { background: #1A2B4A; color: #fff; padding: 9px 16px; font-size: 13.5px;
+                 font-weight: 700; letter-spacing: .3px; }
+.section-body { padding: 12px 16px; }
+.bloque-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: .8px; margin: 8px 0 5px; }
+.label-positivo { color: #1A7A3C; }
+.label-mejorar  { color: #C0392B; }
+ul.bullets { margin-left: 16px; }
+ul.bullets li { font-size: 13px; margin-bottom: 4px; line-height: 1.5; }
+.sin-datos { color: #888; font-style: italic; font-size: 13px; }
+
+/* Tabla ICC */
+.tbl-icc { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 12px; }
+.tbl-icc th { background: #1A2B4A; color: #fff; padding: 7px 9px; text-align: left; font-weight: 600; }
+.tbl-icc td { padding: 6px 9px; border-bottom: 1px solid #EEE; vertical-align: top; }
+.tbl-icc tr:last-child td { border-bottom: none; }
+.tbl-icc tr:nth-child(even) td { background: #F9FAFB; }
+
+/* Tabla tareas */
+.tbl-tareas { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; }
+.tbl-tareas th { background: #1A2B4A; color: #fff; padding: 8px 10px; text-align: left; }
+.tbl-tareas td { padding: 7px 10px; border-bottom: 1px solid #EEE; vertical-align: top; }
+.tbl-tareas tr:nth-child(even) td { background: #F5F5F5; }
+
+/* Badges */
+.badge { display: inline-block; border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 700; }
+.badge-pos { background: #D4EDDA; color: #1A7A3C; }
+.badge-mej { background: #FADBD8; color: #C0392B; }
+.badge-top { background: #FFD700; color: #333; }
+.badge-mod { background: #E8ECF5; color: #1A2B4A; font-size: 11px; }
+
+/* Tabla evolución */
+.tbl-evo { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 10px; }
+.tbl-evo th { background: #1A2B4A; color: #fff; padding: 8px 12px; text-align: center; font-weight: 600; }
+.tbl-evo th:first-child { text-align: left; }
+.tbl-evo td { padding: 7px 12px; border-bottom: 1px solid #EEE; text-align: center; }
+.tbl-evo td:first-child { text-align: left; font-weight: 500; }
+.tbl-evo tr:nth-child(even) td { background: #F9FAFB; }
+.evo-up   { background: #D4EDDA; color: #1A7A3C; font-weight: 600; }
+.evo-down { background: #FADBD8; color: #C0392B; font-weight: 600; }
+.evo-null { color: #aaa; }
+.evo-obj td { background: #1A2B4A !important; color: #FFD700; font-weight: 700; }
+.evo-obj td:first-child { color: #fff; }
+
+/* Tabla objetivos */
+.tbl-obj { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 10px; }
+.tbl-obj th { background: #1A2B4A; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+.tbl-obj td { padding: 7px 12px; border-bottom: 1px solid #EEE; vertical-align: top; }
+.tbl-obj tr:nth-child(even) td { background: #F9FAFB; }
+.obj-pos { color: #1A7A3C; font-weight: 600; }
+.obj-mej { color: #C0392B; font-weight: 600; }
+.obj-note { background: #FFF8E6; border-left: 3px solid #F5A623;
+            padding: 10px 14px; margin: 10px 0; font-size: 12.5px; border-radius: 4px; }
+</style>
+</head><body>
+<script>
+function showTab(tabId, btn) {
+  document.querySelectorAll('.tab-content').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+<div class="page">
+<div class="header">
+<h1>Seguimiento Rivas VW — Abril 2026</h1>
+<div class="sub">Javier Pina · Rivas VW / Industriales</div>
+<div class="fecha">Generado: 06/05/2026</div>
+</div>
+<nav class="tab-nav">
+<button class="tab-btn " onclick="showTab('tab-2026-03', this)">Mar 2026</button>
+<button class="tab-btn active" onclick="showTab('tab-2026-04', this)">Abr 2026</button>
+<button class="tab-btn" onclick="showTab('tab-evo', this)">Evolución</button>
+<button class="tab-btn" onclick="showTab('tab-obj', this)">Objetivos</button>
+</nav>
+<div id="tab-2026-03" class="tab-content ">
+<div class="section">
+<div class="section-title">Proactividad comercial</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>Desgaste — Baterías: 19.39 pts (media equipo: 10.92 pts).</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Desgaste: posición 16º con 205.10 pts, por debajo de la media del equipo (253.34 pts).</li>
+<li>Desgaste — Amortiguadores: 4.08 pts, por debajo de la media (19.41 pts).</li>
+<li>Desgaste — Escobillas: 23.47 pts, por debajo de la media (55.78 pts).</li>
+<li>Full/Long Drive: 5 operaciones, por debajo de la media del equipo (8).</li>
+<li>Fidelidad de cliente: 57.98%, por debajo de la media del equipo (63.48%).</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Digital</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">Calidad</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>CAL1SEM: 5.00 — resultado bueno.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Procesos</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">Recursos generales</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">Horch Lauden</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>Posición 13 en la competición Horch Lauden. Resultado de élite: top absoluto de la competición de marca.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Cuadro de Calidad CX 2026</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>Google Business Profile (% Respuestas): 100,00% — 2/2 pts  |  Referencia: 0pts <80% | 1pt ≥80% | 2pts 100%</li>
+<li>Club Volkswagen (% Adhesión): 6,79% — 2/2 pts  |  Referencia: 0pts <3% | 1pt ≥3% | 2pts ≥6%</li>
+<li>Satisfacción General (CEM): 4,68 — 2/2 pts  |  Referencia: 0pts <4,52 | 1pt ≥4,52 | 2pts ≥4,62</li>
+<li>Servicios Rápidos (en el día): 73,68% — 2/2 pts  |  Referencia: 0pts <40% | 1pt ≥40% | 2pts ≥45%</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Medidas de Servicio (EC28): — — 1/2 pts  |  Referencia: 0pts >5% | 1pt ≤5% | 2pts ≤3%</li>
+<li>Conectividad (ASS Activado): 10,26% — 0/2 pts  |  Referencia: 0pts <25% | 1pt ≥25% | 2pts ≥40%</li>
+<li>Industriales (30070 LCV) — VW Vehículos Comerciales</li>
+<li>Total: 6/8 puntos</li>
+<li>Medidas de Servicio (EC28): — — 1/2 pts  |  Referencia: 0pts >5% | 1pt ≤5% | 2pts ≤3%</li>
+<li>Conectividad Posventa: 11,63% — 1/2 pts  |  Referencia: 0pts <10% | 1pt ≥10% | 2pts ≥25%</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">ONE KVPS — Semana 13 (2026)</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>Score SEM: 6,0 (media equipo: 5,8) — por encima de la media</li>
+<li>Service CAM Acum.: 11% (media equipo: 6%; bueno ≥8%) — en rango positivo</li>
+<li>Multimedia Acum.: 5,0 (media equipo: 5,6; bueno ≥5) — en rango positivo</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Diferidos Acum.: 0% (media equipo: 12%; bueno ≥8%) — por debajo del umbral regular</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Tareas pendientes</div>
+<div class="section-body">
+<table class="tbl-tareas"><thead><tr>
+<th>Tarea</th>
+<th>Responsable</th>
+<th>Fecha límite</th>
+<th>Grado de cumplimentación</th>
+</tr></thead><tbody>
+<tr>
+<td>Utilizar el Laser de desgaste</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Foco en desgaste</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Diferidos</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</div></div>
+</div>
+<div id="tab-2026-04" class="tab-content active">
+<div class="section">
+<div class="section-title">Proactividad comercial</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>Desgaste total 200.77 pts (posición 16/18 del ranking): por encima del objetivo de 200 pts.</li>
+<li>Por encima de la media: Baterías: 16.15 pts (media 11.0 pts) ✓ | Parabrisas: 18.46 pts (media 17.1 pts) ✓.</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Por debajo de la media: Amortiguadores: 7.69 pts (media 19.6 pts) | Discos: 20.00 pts (media 20.6 pts) | Escobillas: 24.62 pts (media 52.9 pts) | Neumáticos: 71.54 pts (media 75.7 pts) | Pastillas: 42.31 pts (media 49.5 pts).</li>
+<li>Full/Long Drive: 6 operaciones (media equipo: 11.1). Por debajo de la media.</li>
+<li>Fidelidad: 57.98% (media equipo: 63.48%). Por debajo de la media.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Digital</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">Calidad</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>CAL1SEM: 6.00 (30 puntos Iron Man). Buen resultado.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Procesos</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">Recursos generales</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">Horch Lauden</div>
+<div class="section-body">
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Horch Lauden: posición 102. Requiere atención.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Cuadro de Calidad CX 2026</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">ONE KVPS</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>Instalación ONE: Asesor</li>
+<li>Service CAM Acum.: 11% (media equipo: 8%; bueno ≥8%) — en rango positivo</li>
+<li>Multimedia Acum.: 5,0 (media equipo: 6,1; bueno ≥5) — en rango positivo</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Score SEM: 4,5 (media equipo: 6,2) — por debajo de la media</li>
+<li>Diferidos Acum.: 1% (media equipo: 16%; bueno ≥8%) — por debajo del objetivo</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Tareas pendientes</div>
+<div class="section-body">
+<table class="tbl-tareas"><thead><tr>
+<th>Tarea</th>
+<th>Responsable</th>
+<th>Fecha límite</th>
+<th>Grado de cumplimentación</th>
+</tr></thead><tbody>
+<tr>
+<td>Utilizar el Laser de desgaste</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Foco en desgaste</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Diferidos</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</div></div>
+</div>
+<div id="tab-evo" class="tab-content">
+<div class="section"><div class="section-title">Evolución por periodo</div>
+<div class="section-body">
+<table class="tbl-evo"><thead><tr>
+<th>Métrica</th>
+<th>Mar 2026</th>
+<th>Abr 2026</th>
+<th>Objetivo</th>
+</tr></thead><tbody>
+<tr>
+<td>Desgaste total</td>
+<td class="evo-null">—</td>
+<td class="">200,77</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">200 pts</td>
+</tr>
+<tr>
+<td>Posición ranking</td>
+<td class="evo-null">—</td>
+<td class="">16,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">—</td>
+</tr>
+<tr>
+<td>CAL1SEM</td>
+<td class="">5,0</td>
+<td class="evo-up">6,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">5,0</td>
+</tr>
+<tr>
+<td>Full/Long Drive</td>
+<td class="">5,0</td>
+<td class="evo-up">6,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">11,1 ops</td>
+</tr>
+<tr>
+<td>Fidelidad (%)</td>
+<td class="evo-null">—</td>
+<td class="">57,98</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">63,48%</td>
+</tr>
+<tr>
+<td>Horch Lauden</td>
+<td class="evo-null">—</td>
+<td class="">102,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">≤50</td>
+</tr>
+<tr>
+<td>Score ONE</td>
+<td class="">6,0</td>
+<td class="evo-down">4,5</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">6,2</td>
+</tr>
+<tr>
+<td>Service CAM (%)</td>
+<td class="">11,0</td>
+<td class="">11,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">8%</td>
+</tr>
+<tr>
+<td>Diferidos (%)</td>
+<td class="">0,0</td>
+<td class="evo-up">1,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">8%</td>
+</tr>
+<tr>
+<td>Multimedia</td>
+<td class="">5,0</td>
+<td class="">5,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">5</td>
+</tr>
+</tbody></table>
+</div></div></div>
+<div id="tab-obj" class="tab-content">
+<div class="section"><div class="section-title">Objetivos y umbrales de referencia</div>
+<div class="section-body">
+<table class="tbl-obj"><thead><tr>
+<th>Métrica</th><th>Referencia</th>
+<th class="obj-pos">Positivo si...</th>
+<th class="obj-mej">Mejorar si...</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Desgaste total</strong></td>
+<td>>200 pts</td>
+<td class="obj-pos">≥200 pts</td>
+<td class="obj-mej"><200 pts — seguimiento prioritario</td>
+</tr>
+<tr>
+<td><strong>CAL1SEM</strong></td>
+<td>≥5,0</td>
+<td class="obj-pos">≥5,0</td>
+<td class="obj-mej"><5,0</td>
+</tr>
+<tr>
+<td><strong>Full/Long Drive</strong></td>
+<td>Media equipo: 11,1 ops</td>
+<td class="obj-pos">>11,1 ops</td>
+<td class="obj-mej">≤11,1 ops</td>
+</tr>
+<tr>
+<td><strong>Fidelidad</strong></td>
+<td>Media equipo: 63,48%</td>
+<td class="obj-pos">≥63,48%</td>
+<td class="obj-mej"><63,48%</td>
+</tr>
+<tr>
+<td><strong>Horch Lauden (pos)</strong></td>
+<td>≤50 aceptable</td>
+<td class="obj-pos">≤20 dest. / ≤50 acept.</td>
+<td class="obj-mej">>50 — requiere atención</td>
+</tr>
+<tr>
+<td><strong>ONE Score SEM</strong></td>
+<td>Por encima de la media (6,2)</td>
+<td class="obj-pos">>6,2</td>
+<td class="obj-mej">≤6,2</td>
+</tr>
+<tr>
+<td><strong>ONE Service CAM</strong></td>
+<td>≥8%</td>
+<td class="obj-pos">≥8%</td>
+<td class="obj-mej">5-8% regular / <5% mejorar</td>
+</tr>
+<tr>
+<td><strong>ONE Diferidos</strong></td>
+<td>≥8%</td>
+<td class="obj-pos">≥8%</td>
+<td class="obj-mej">5-8% regular / <5% mejorar</td>
+</tr>
+<tr>
+<td><strong>ONE Multimedia</strong></td>
+<td>≥5</td>
+<td class="obj-pos">≥5</td>
+<td class="obj-mej">3-5 regular / <3 mejorar</td>
+</tr>
+</tbody></table>
+</div></div></div>
+</div></body></html>

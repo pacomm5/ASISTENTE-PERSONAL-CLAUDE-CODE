@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<title>Seguimiento Rivas Audi — Abril 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #F0F2F5; color: #222; }
+.page { max-width: 960px; margin: 0 auto; background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+
+/* Header */
+.header { background: #1A2B4A; color: #fff; padding: 28px 40px 20px; }
+.header h1 { font-size: 20px; font-weight: 700; letter-spacing: .5px; margin-bottom: 4px; }
+.header .sub { font-size: 13px; color: #A8B8D0; }
+.header .fecha { font-size: 11px; color: #7A90B0; margin-top: 3px; }
+
+/* Tabs */
+.tab-nav { display: flex; background: #131f35; overflow-x: auto; }
+.tab-btn { padding: 11px 20px; cursor: pointer; color: #8A9BB5; font-size: 12.5px;
+           font-weight: 600; border: none; background: none; border-bottom: 3px solid transparent;
+           white-space: nowrap; letter-spacing: .2px; }
+.tab-btn:hover { color: #D0DCF0; }
+.tab-btn.active { color: #fff; border-bottom-color: #4A90D9; background: #1A2B4A; }
+.tab-content { display: none; padding: 28px 36px; }
+.tab-content.active { display: block; }
+
+/* Secciones */
+.section { margin-bottom: 22px; border-radius: 7px; border: 1px solid #E5E8EE; overflow: hidden; }
+.section-title { background: #1A2B4A; color: #fff; padding: 9px 16px; font-size: 13.5px;
+                 font-weight: 700; letter-spacing: .3px; }
+.section-body { padding: 12px 16px; }
+.bloque-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: .8px; margin: 8px 0 5px; }
+.label-positivo { color: #1A7A3C; }
+.label-mejorar  { color: #C0392B; }
+ul.bullets { margin-left: 16px; }
+ul.bullets li { font-size: 13px; margin-bottom: 4px; line-height: 1.5; }
+.sin-datos { color: #888; font-style: italic; font-size: 13px; }
+
+/* Tabla ICC */
+.tbl-icc { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 12px; }
+.tbl-icc th { background: #1A2B4A; color: #fff; padding: 7px 9px; text-align: left; font-weight: 600; }
+.tbl-icc td { padding: 6px 9px; border-bottom: 1px solid #EEE; vertical-align: top; }
+.tbl-icc tr:last-child td { border-bottom: none; }
+.tbl-icc tr:nth-child(even) td { background: #F9FAFB; }
+
+/* Tabla tareas */
+.tbl-tareas { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; }
+.tbl-tareas th { background: #1A2B4A; color: #fff; padding: 8px 10px; text-align: left; }
+.tbl-tareas td { padding: 7px 10px; border-bottom: 1px solid #EEE; vertical-align: top; }
+.tbl-tareas tr:nth-child(even) td { background: #F5F5F5; }
+
+/* Badges */
+.badge { display: inline-block; border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 700; }
+.badge-pos { background: #D4EDDA; color: #1A7A3C; }
+.badge-mej { background: #FADBD8; color: #C0392B; }
+.badge-top { background: #FFD700; color: #333; }
+.badge-mod { background: #E8ECF5; color: #1A2B4A; font-size: 11px; }
+
+/* Tabla evolución */
+.tbl-evo { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 10px; }
+.tbl-evo th { background: #1A2B4A; color: #fff; padding: 8px 12px; text-align: center; font-weight: 600; }
+.tbl-evo th:first-child { text-align: left; }
+.tbl-evo td { padding: 7px 12px; border-bottom: 1px solid #EEE; text-align: center; }
+.tbl-evo td:first-child { text-align: left; font-weight: 500; }
+.tbl-evo tr:nth-child(even) td { background: #F9FAFB; }
+.evo-up   { background: #D4EDDA; color: #1A7A3C; font-weight: 600; }
+.evo-down { background: #FADBD8; color: #C0392B; font-weight: 600; }
+.evo-null { color: #aaa; }
+.evo-obj td { background: #1A2B4A !important; color: #FFD700; font-weight: 700; }
+.evo-obj td:first-child { color: #fff; }
+
+/* Tabla objetivos */
+.tbl-obj { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 10px; }
+.tbl-obj th { background: #1A2B4A; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+.tbl-obj td { padding: 7px 12px; border-bottom: 1px solid #EEE; vertical-align: top; }
+.tbl-obj tr:nth-child(even) td { background: #F9FAFB; }
+.obj-pos { color: #1A7A3C; font-weight: 600; }
+.obj-mej { color: #C0392B; font-weight: 600; }
+.obj-note { background: #FFF8E6; border-left: 3px solid #F5A623;
+            padding: 10px 14px; margin: 10px 0; font-size: 12.5px; border-radius: 4px; }
+</style>
+</head><body>
+<script>
+function showTab(tabId, btn) {
+  document.querySelectorAll('.tab-content').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+<div class="page">
+<div class="header">
+<h1>Seguimiento Rivas Audi — Abril 2026</h1>
+<div class="sub">Emilio · Rivas Audi</div>
+<div class="fecha">Generado: 06/05/2026</div>
+</div>
+<nav class="tab-nav">
+<button class="tab-btn " onclick="showTab('tab-2026-03', this)">Mar 2026</button>
+<button class="tab-btn active" onclick="showTab('tab-2026-04', this)">Abr 2026</button>
+<button class="tab-btn" onclick="showTab('tab-evo', this)">Evolución</button>
+<button class="tab-btn" onclick="showTab('tab-obj', this)">Objetivos</button>
+</nav>
+<div id="tab-2026-03" class="tab-content ">
+<div class="section">
+<div class="section-title">Proactividad comercial</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<p class="badge badge-mod" style="margin-bottom:8px;">ICC Módulo Proactividad Comercial — Posición 3 de 143 | Puntuación: 7,85</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>Ext. Garantia</td><td>84,8%</td><td>65,5%</td><td><span class="badge badge-top">91,8%</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+<tr><td>Sust. Neumaticos</td><td>27,2%</td><td>24,1%</td><td><span class="badge badge-top">46,0%</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+<tr><td>Radar (Desgaste)</td><td>116,69%</td><td>98,3%</td><td><span class="badge badge-top">162,8%</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+<tr><td>At. Comerciales</td><td>7,56%</td><td>6,3%</td><td><span class="badge badge-top">20,96%</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+</tbody></table>
+<ul class="bullets">
+<li>Desgaste total 252.57% (posicion 2/7 del ranking): por encima del umbral de referencia (220%).</li>
+<li>Detalle por categoria: Amortiguadores: 32.66% | Baterias: 11.19% | Discos: 25.50% | Escobillas: 50.78% | Neumaticos: 57.49% | Parabrisas: 15.66% | Pastillas: 59.28%.</li>
+<li>Variacion recambios respecto a hace 2 anos: +31.37%.</li>
+<li>Variacion mano de obra respecto a hace 2 anos: +41.38%.</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>RGPD</td><td>80,4%</td><td>72,4%</td><td><span class="badge badge-top">90,3%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+<tr><td>Accesorios</td><td>sin actividad registrada (#DIV/0). Critico.</td><td></td><td></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+<tr><td>Campanas Averias</td><td>0%</td><td>10%</td><td><span class="badge badge-top">10%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+</tbody></table>
+
+</div></div>
+<div class="section">
+<div class="section-title">Digital</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<p class="badge badge-mod" style="margin-bottom:8px;">ICC Módulo Digital — Posición 21 de 143 | Puntuación: 5,95</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>Audi CAM</td><td>5,45%</td><td>5,2%</td><td><span class="badge badge-top">18,4%</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+<tr><td>Recovery Conectividad</td><td>56,45%</td><td>18,1%</td><td><span class="badge badge-top">47,69%</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+<tr><td>ONE Score</td><td>6,7</td><td>6,6</td><td><span class="badge badge-top">8,6</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+</tbody></table>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>Cita Online</td><td>0,0%</td><td>18,1%</td><td><span class="badge badge-top">47,6%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+</tbody></table>
+
+</div></div>
+<div class="section">
+<div class="section-title">Calidad</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<p class="badge badge-mod" style="margin-bottom:8px;">ICC Módulo Calidad — Posición 66 de 143 | Puntuación: 5,99</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>CEM Satisfaccion General</td><td>4,8</td><td>4,69</td><td><span class="badge badge-top">5,0</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+<tr><td>Audi Move</td><td>93,3%</td><td>56,2%</td><td><span class="badge badge-top">92,5%</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+<tr><td>Transporte Alternativo</td><td>67,2%</td><td>56,1%</td><td></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+</tbody></table>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>ICT (Incidencias)</td><td>0,8%</td><td>0,6%</td><td><span class="badge badge-top">0%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+<tr><td>Contacto Proceso AU</td><td>55,0%</td><td>74,18%</td><td><span class="badge badge-top">96,33%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+</tbody></table>
+<ul class="bullets">
+<li>CAL1SEM: 4.00 (10 puntos Iron Man). Por debajo de 5. Revisar encuestas de satisfaccion.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Procesos</div>
+<div class="section-body">
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Productividad: 90.72% sobre objetivo 93% (-2.28pp). Objetivo no alcanzado.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Recursos generales</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<p class="badge badge-mod" style="margin-bottom:8px;">ICC Módulo Recursos Generales — Posición 115 de 143 | Puntuación: 4,08</p>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>Ocupacion (PLATON)</td><td>78,6%</td><td>88,51%</td><td><span class="badge badge-top">98,06%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+<tr><td>T. Cita Mecanica</td><td>22,8 dias</td><td>18,22</td><td><span class="badge badge-top">15,32</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+<tr><td>T. Ciclo Carroceria</td><td>10,2 dias</td><td>6,62</td><td><span class="badge badge-top">5,78</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+<tr><td>Mantenimientos <24h</td><td>30,9%</td><td>44,92%</td><td><span class="badge badge-top">70,07%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+<tr><td>Pedido Talentia</td><td>63%</td><td>90,9%</td><td><span class="badge badge-top">230,8%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+</tbody></table>
+
+</div></div>
+<div class="section">
+<div class="section-title">Carroceria</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<p class="badge badge-mod" style="margin-bottom:8px;">ICC Módulo Carroceria — Posición 15 de 143 | Puntuación: 7,67</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>Fidelidad Mecanica</td><td>41,0%</td><td>5,6%</td><td><span class="badge badge-top">1,9%</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+<tr><td>CEM Carroceria</td><td>5,0</td><td>4,78</td><td><span class="badge badge-top">5,0</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+<tr><td>Recup. Siniestros</td><td>100%</td><td>96,7%</td><td><span class="badge badge-top">100%</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+</tbody></table>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>Retencion Parque</td><td>-14,4%</td><td>-10,7%</td><td><span class="badge badge-top">1,9%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+</tbody></table>
+
+</div></div>
+<div class="section">
+<div class="section-title">Personas</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<p class="badge badge-mod" style="margin-bottom:8px;">ICC Módulo Personas — Posición 76 de 143 | Puntuación: 7,94</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>Formacion (% No Asistencia)</td><td>9,6%</td><td>10,5%</td><td><span class="badge badge-top">0,0%</span></td><td><span class="badge badge-pos">Positivo</span></td></tr>
+</tbody></table>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<table class="tbl-icc"><thead><tr><th>Indicador</th><th>Valor</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr></thead><tbody>
+<tr><td>Formacion (% Certificados)</td><td>98,6%</td><td>99,29%</td><td><span class="badge badge-top">100%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+<tr><td>Retencion Personal</td><td>95,7%</td><td>99,2%</td><td><span class="badge badge-top">100%</span></td><td><span class="badge badge-mej">Mejorar</span></td></tr>
+</tbody></table>
+
+</div></div>
+<div class="section">
+<div class="section-title">Rankings de marca</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>ICC global: posicion 3 de 143 | Puntuacion: 7,85</li>
+<li>Iron Man ICC: posicion 3 en el ranking de marca. Posicion destacada (top 10).</li>
+<li>Horch Lauden: posicion 26. Posicion aceptable.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Cuadro de Calidad CX 2026</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>Conectividad Posventa: 50,00% — 2/2 pts  |  Referencia: 0pts <25% | 1pt ≥25% | 2pts ≥45%</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Satisfacción General (CEM Q4): 4,71 — 1/2 pts  |  Referencia: 0pts <4,60 | 1pt ≥4,60 | 2pts ≥4,80</li>
+<li>Medidas de Servicio (EC28): — — 1/2 pts  |  Referencia: 0pts >5% | 1pt ≤5% | 2pts ≤1%</li>
+<li>Información Proceso (TRS): 63,33% — 0/2 pts  |  Referencia: 0pts <80% | 1pt ≥80% | 2pts ≥90%</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">ONE KVPS — Semana 13 (2026)</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>Diferidos Acum.: 23% (media equipo: 11%; bueno ≥8%) — en rango positivo</li>
+<li>Multimedia Acum.: 6,6 (media equipo: 6,0; bueno ≥5) — en rango positivo</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Score SEM: 6,3 (media equipo: 6,9) — por debajo de la media</li>
+<li>Service CAM Acum.: 6% (media equipo: 6%; bueno ≥8%) — en rango regular</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Tareas pendientes</div>
+<div class="section-body">
+<table class="tbl-tareas"><thead><tr>
+<th>Tarea</th>
+<th>Responsable</th>
+<th>Fecha limite</th>
+<th>Grado de cumplimentación</th>
+</tr></thead><tbody>
+<tr>
+<td>Utilizar el Laser de desgaste</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Puntos de Calidad</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Indice de reclamaciones a clientes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Productividad</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ocupación Platon</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Mantenimientos <24h</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Score One.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Service Cam</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</div></div>
+</div>
+<div id="tab-2026-04" class="tab-content active">
+<div class="section">
+<div class="section-title">Proactividad comercial</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>Desgaste total 264.34% (posición 1/7 del ranking): por encima del umbral de referencia (220%).</li>
+<li>Por encima de la media: Amortiguadores: 38.17% (media 17.96%) ✓ | Baterías: 10.75% (media 9.45%) ✓ | Discos: 25.45% (media 18.44%) ✓ | Escobillas: 51.97% (media 50.78%) ✓ | Parabrisas: 17.74% (media 7.61%) ✓ | Pastillas: 57.35% (media 50.60%) ✓.</li>
+<li>Variación recambios respecto a hace 2 años: +32.42%.</li>
+<li>Variación mano de obra respecto a hace 2 años: +34.42%.</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Por debajo de la media: Neumáticos: 62.90% (media 72.66%).</li>
+<li>ICC Proactividad: pendiente de ranking ICC Instalaciones 2026-04.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Digital</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">Calidad</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>CAL1SEM: 5.00 (20 puntos Iron Man). Cumple el mínimo recomendado (5).</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>ICC Calidad: pendiente de ranking ICC Instalaciones 2026-04.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Procesos</div>
+<div class="section-body">
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Productividad: 92.45% sobre objetivo 93% (-0.55pp). Objetivo no alcanzado.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Recursos generales</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">Carrocería</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">Personas</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">Rankings de marca</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>ICC global: posición 3 | Iron Man ICC: posición 3 en el ranking de marca. Posición destacada (top 10).</li>
+<li>Horch Lauden: posición 38. Posición aceptable.</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Cuadro de Calidad CX 2026</div>
+<div class="section-body">
+<p class="sin-datos">Sin datos registrados</p>
+</div></div>
+<div class="section">
+<div class="section-title">ONE KVPS</div>
+<div class="section-body">
+<p class="bloque-label label-positivo">Puntos positivos</p>
+<ul class="bullets">
+<li>Instalación ONE: Rivas Audi (00158)</li>
+<li>Service CAM Acum.: 13% (media equipo: 8%; bueno ≥8%) — en rango positivo</li>
+<li>Diferidos Acum.: 30% (media equipo: 16%; bueno ≥8%) — en rango positivo</li>
+<li>Multimedia Acum.: 6,8 (media equipo: 6,2; bueno ≥5) — en rango positivo</li>
+</ul>
+
+<p class="bloque-label label-mejorar">Puntos a mejorar</p>
+<ul class="bullets">
+<li>Score SEM: 6,8 (media equipo: 7,3) — por debajo de la media</li>
+</ul>
+
+</div></div>
+<div class="section">
+<div class="section-title">Tareas pendientes</div>
+<div class="section-body">
+<table class="tbl-tareas"><thead><tr>
+<th>Tarea</th>
+<th>Responsable</th>
+<th>Fecha límite</th>
+<th>Grado de cumplimentación</th>
+</tr></thead><tbody>
+<tr>
+<td>Utilizar el Laser de desgaste</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Puntos de Calidad</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Indice de reclamaciones a clientes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Productividad</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ocupación Platon</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Mantenimientos <24h</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Score One.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Service Cam</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</div></div>
+</div>
+<div id="tab-evo" class="tab-content">
+<div class="section"><div class="section-title">Evolución por periodo</div>
+<div class="section-body">
+<table class="tbl-evo"><thead><tr>
+<th>Métrica</th>
+<th>Mar 2026</th>
+<th>Abr 2026</th>
+<th>Objetivo</th>
+</tr></thead><tbody>
+<tr>
+<td>Desgaste total (%)</td>
+<td class="">252,57</td>
+<td class="evo-up">264,34</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">220%</td>
+</tr>
+<tr>
+<td>Posición ranking</td>
+<td class="">2,0</td>
+<td class="evo-up">1,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">—</td>
+</tr>
+<tr>
+<td>CAL1SEM</td>
+<td class="">4,0</td>
+<td class="evo-up">5,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">5,0</td>
+</tr>
+<tr>
+<td>Productividad (%)</td>
+<td class="">90,72</td>
+<td class="evo-up">92,45</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">93%</td>
+</tr>
+<tr>
+<td>Var Rec 2A (%)</td>
+<td class="">31,37</td>
+<td class="evo-up">32,42</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">≥0%</td>
+</tr>
+<tr>
+<td>Var MO 2A (%)</td>
+<td class="">41,38</td>
+<td class="evo-down">34,42</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">≥0%</td>
+</tr>
+<tr>
+<td>Horch Lauden</td>
+<td class="">26,0</td>
+<td class="evo-down">38,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">≤50</td>
+</tr>
+<tr>
+<td>ICC posición global</td>
+<td class="">3,0</td>
+<td class="">3,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">—</td>
+</tr>
+<tr>
+<td>ICC Proactividad</td>
+<td class="">7,85</td>
+<td class="evo-null">—</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">—</td>
+</tr>
+<tr>
+<td>ICC Digital</td>
+<td class="">5,95</td>
+<td class="evo-null">—</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">—</td>
+</tr>
+<tr>
+<td>ICC Calidad</td>
+<td class="">5,99</td>
+<td class="evo-null">—</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">—</td>
+</tr>
+<tr>
+<td>ICC Recursos</td>
+<td class="">4,08</td>
+<td class="evo-null">—</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">—</td>
+</tr>
+<tr>
+<td>ICC Carrocería</td>
+<td class="">7,67</td>
+<td class="evo-null">—</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">—</td>
+</tr>
+<tr>
+<td>ICC Personas</td>
+<td class="">7,94</td>
+<td class="evo-null">—</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">—</td>
+</tr>
+<tr>
+<td>Score ONE</td>
+<td class="">6,3</td>
+<td class="evo-up">6,8</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">7,3</td>
+</tr>
+<tr>
+<td>Service CAM (%)</td>
+<td class="">6,0</td>
+<td class="evo-up">13,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">8%</td>
+</tr>
+<tr>
+<td>Diferidos (%)</td>
+<td class="">23,0</td>
+<td class="evo-up">30,0</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">8%</td>
+</tr>
+<tr>
+<td>Multimedia</td>
+<td class="">6,6</td>
+<td class="evo-up">6,8</td>
+<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">5</td>
+</tr>
+</tbody></table>
+</div></div></div>
+<div id="tab-obj" class="tab-content">
+<div class="section"><div class="section-title">Objetivos y umbrales de referencia</div>
+<div class="section-body">
+<div class="obj-note">Objetivo de productividad específico para esta instalación: <strong>93%</strong></div>
+<table class="tbl-obj"><thead><tr>
+<th>Métrica</th><th>Referencia</th>
+<th class="obj-pos">Positivo si...</th>
+<th class="obj-mej">Mejorar si...</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Desgaste total (%)</strong></td>
+<td>>220%</td>
+<td class="obj-pos">≥220%</td>
+<td class="obj-mej"><220% — seguimiento prioritario</td>
+</tr>
+<tr>
+<td><strong>CAL1SEM</strong></td>
+<td>≥5,0</td>
+<td class="obj-pos">≥5,0</td>
+<td class="obj-mej"><5,0</td>
+</tr>
+<tr>
+<td><strong>Productividad</strong></td>
+<td>Específico por instalación</td>
+<td class="obj-pos">≥objetivo</td>
+<td class="obj-mej"><objetivo</td>
+</tr>
+<tr>
+<td><strong>Var Rec 2A</strong></td>
+<td>≥0%</td>
+<td class="obj-pos">≥0%</td>
+<td class="obj-mej"><0%</td>
+</tr>
+<tr>
+<td><strong>Var MO 2A</strong></td>
+<td>≥0%</td>
+<td class="obj-pos">≥0%</td>
+<td class="obj-mej"><0%</td>
+</tr>
+<tr>
+<td><strong>Horch Lauden (pos)</strong></td>
+<td>≤50 aceptable</td>
+<td class="obj-pos">≤20 dest. / ≤50 acept.</td>
+<td class="obj-mej">>50 — requiere atención</td>
+</tr>
+<tr>
+<td><strong>ONE Score SEM</strong></td>
+<td>Por encima de la media (7,3)</td>
+<td class="obj-pos">>7,3</td>
+<td class="obj-mej">≤7,3</td>
+</tr>
+<tr>
+<td><strong>ONE Service CAM</strong></td>
+<td>≥8%</td>
+<td class="obj-pos">≥8%</td>
+<td class="obj-mej">5-8% regular / <5% mejorar</td>
+</tr>
+<tr>
+<td><strong>ONE Diferidos</strong></td>
+<td>≥8%</td>
+<td class="obj-pos">≥8%</td>
+<td class="obj-mej">5-8% regular / <5% mejorar</td>
+</tr>
+<tr>
+<td><strong>ONE Multimedia</strong></td>
+<td>≥5</td>
+<td class="obj-pos">≥5</td>
+<td class="obj-mej">3-5 regular / <3 mejorar</td>
+</tr>
+</tbody></table>
+</div></div></div>
+</div></body></html>

@@ -269,70 +269,52 @@ Cuando una instalación tiene mecánica y chapa, los datos ICC del módulo de Ca
 
 ## Generación del HTML y Excel a partir del Word
 
-El HTML y el Excel se generan siempre **después** de que el Word esté revisado y cerrado. Nunca antes. Ambos formatos leen el Word como única fuente de datos y producen el mismo contenido con el mismo estilo visual.
+El HTML y el Excel se generan siempre **después** de que el Word esté revisado y cerrado. Nunca antes. Ambos formatos leen los Word como única fuente de datos.
 
-### Lectura del Word
+**Script:** `informes/generar_html_excel.py`. Ejecutar con `/opt/homebrew/bin/python3 generar_html_excel.py`.
 
-Usar `python-docx` para extraer todo el contenido:
+### Estructura de salida — multi-pestaña por persona
 
-```python
-from docx import Document
+El script agrupa todos los Word de una misma persona (`informe_seguimiento_{key}_YYYY-MM.docx`) y genera **un único HTML y un único Excel por persona** con las siguientes pestañas/hojas:
 
-def leer_informe_word(path):
-    doc = Document(path)
-    secciones = {}
-    seccion_actual = None
-    bloque_actual = None  # "positivo" o "mejorar"
+| Pestaña | Contenido |
+|---|---|
+| Una por cada mes (`Mar 2026`, `Abr 2026`...) | Contenido del Word de ese mes (positivos, mejoras, tareas) |
+| **Evolución** | Tabla comparativa de métricas clave por mes + columna Objetivo al final |
+| **Objetivos** | Tarjeta de umbrales de referencia según el tipo de persona |
 
-    for p in doc.paragraphs:
-        texto = p.text.strip()
-        if not texto:
-            continue
-        if p.style.name == 'Heading 1':
-            seccion_actual = texto
-            secciones[seccion_actual] = {"positivo": [], "mejorar": [], "tabla": None}
-            bloque_actual = None
-        elif 'Puntos positivos' in texto:
-            bloque_actual = "positivo"
-        elif 'Puntos a mejorar' in texto:
-            bloque_actual = "mejorar"
-        elif seccion_actual and bloque_actual:
-            secciones[seccion_actual][bloque_actual].append(texto)
-
-    # Leer tablas (tareas pendientes)
-    for table in doc.tables:
-        headers = [c.text.strip() for c in table.rows[0].cells]
-        if 'Tarea' in headers:
-            filas = []
-            for row in table.rows[1:]:
-                filas.append([c.text.strip() for c in row.cells])
-            secciones['Tareas pendientes']['tabla'] = filas
-
-    return secciones
-```
-
-### Diferencias por tipo de informe
-
-No todos los informes tienen los mismos módulos. Al generar el HTML, omitir secciones vacías o sin datos:
-
-| Tipo | Módulos presentes | Ausentes |
-|---|---|---|
-| Jefe taller mecánica (Emilio, Izquierdo, Alberto, Carlos, Fernando RVW) | Todos: Proactividad, Digital, Calidad, Procesos, Recursos, Carrocería, Personas, Rankings, CX, ONE, Tareas | — |
-| Jefe taller chapa (Luis Ramos, Pericles) | Proactividad (solo Var Rec/MO), Carrocería, Personas, CX, Tareas | Sin desgaste propio, sin ONE, sin Procesos |
-| Fernando Industriales | Calidad, Carrocería, Recursos, Personas, CX, Tareas | Sin Iron Man, sin Procesos, sin ONE propio |
-| Asesor de servicio | Proactividad (desgaste individual), Calidad (CAL1SEM), CX, ONE, Tareas | Sin módulos ICC de instalación |
+La pestaña activa por defecto es el **último mes** disponible.
 
 ### Naming
 
-Mismo nombre que el Word cambiando la extensión:
-- HTML: `informe_seguimiento_{nombre}_{instalacion}_{periodo}.html`
-- Excel: `informe_seguimiento_{nombre}_{instalacion}_{periodo}.xlsx`
+- HTML: `informe_seguimiento_{key}.html` (sin periodo — contiene todos los meses)
+- Excel: `informe_seguimiento_{key}.xlsx`
+
+El `key` coincide con el nombre del Word sin el prefijo `informe_seguimiento_` ni el sufijo `_YYYY-MM.docx`. Ejemplos: `alvaro`, `emilio_rivas_audi`, `luis_ramos_rivas_a_chapa`.
+
+### Pestaña Evolución — métricas y objetivo
+
+Métricas extraídas por regex de los bullets del Word. La última columna es siempre **Objetivo** (fondo azul oscuro, texto dorado). Métricas por tipo:
+
+| Tipo | Métricas en Evolución |
+|---|---|
+| Asesor | Desgaste total, Posición ranking, CAL1SEM, Full/Long Drive, Fidelidad, Horch Lauden, Score ONE, Service CAM, Diferidos, Multimedia |
+| Jefe mecánica | Desgaste total, Posición ranking, CAL1SEM, Productividad, Var Rec 2A, Var MO 2A, Horch Lauden, Score ONE, Service CAM, Diferidos, Multimedia |
+| Jefe chapa | CAL1SEM, Productividad, Var Rec 2A, Var MO 2A, Horch Lauden |
+| Industriales | Score ONE, Service CAM, Diferidos, Multimedia |
+
+Los objetivos de productividad específicos por instalación (Ayala 105%, Rivas VW 89%, chapa 120%) se aplican automáticamente a la columna Objetivo.
 
 ### Colores fijos
 
 - Verde positivo: `#1A7A3C`
 - Rojo mejorar: `#C0392B`
 - Azul cabecera: `#1A2B4A`
+- Dorado objetivo: `#FFD700` sobre fondo `#1A2B4A`
+
+### Parsing del Word
+
+Usar `python-docx`. Heading 1 = sección, "Puntos positivos" / "Puntos a mejorar" = bloque, List Bullet = bullet. Las tablas Word son las tareas pendientes. Los bullets con patrón `ICC - Indicador: valor (media X, Top20 Y)` se renderizan como tabla de datos; el resto como lista de texto. **No usar regex con `(.*)` al final para parsear ICC** — usar parser paso a paso por `find()` para evitar roturas con coma decimal europea. Ver `parse_icc_bullet()` en el script.
 
 ---
 
