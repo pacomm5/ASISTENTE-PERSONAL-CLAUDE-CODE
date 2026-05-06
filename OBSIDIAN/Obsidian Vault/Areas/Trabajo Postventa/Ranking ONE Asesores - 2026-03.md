@@ -1,15 +1,15 @@
 ---
-title: Ranking ONE Asesores - 2026-S13
+title: Ranking ONE Asesores - 2026-03
 date: 2026-04-07
 tags:
   - jarmauto
   - one
   - ranking
   - asesores
-periodo: 2026-S13
+periodo: 2026-03
 ---
 
-# Ranking ONE Asesores (ASP) - Semana 13 (2026)
+# Ranking ONE Asesores (ASP) - Cierre Marzo 2026
 
 | Nombre ONE | Nombre interno | Score SEM | Service CAM Acu | Diferidos Acu | Multimedia Acu |
 |---|---|---|---|---|---|

@@ -1,15 +1,15 @@
 ---
-title: Ranking ONE Instalaciones - 2026-S13
+title: Ranking ONE Instalaciones - 2026-03
 date: 2026-04-07
 tags:
   - jarmauto
   - one
   - ranking
   - instalaciones
-periodo: 2026-S13
+periodo: 2026-03
 ---
 
-# Ranking ONE Instalaciones - Semana 13 (2026)
+# Ranking ONE Instalaciones - Cierre Marzo 2026
 
 | KVPS | Instalación ONE | Instalación interna | Score SEM | Service CAM Acu | Diferidos Acu | Multimedia Acu |
 |---|---|---|---|---|---|---|
