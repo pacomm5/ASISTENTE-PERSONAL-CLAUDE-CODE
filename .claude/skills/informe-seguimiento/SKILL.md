@@ -280,7 +280,7 @@ El script agrupa todos los Word de una misma persona (`informe_seguimiento_{key}
 | Pestaña | Contenido |
 |---|---|
 | Una por cada mes (`Mar 2026`, `Abr 2026`...) | Contenido del Word de ese mes (positivos, mejoras, tareas) |
-| **Evolución** | Tabla comparativa de métricas clave por mes + columna Objetivo al final |
+| **Evolución** | Métricas comparativas por mes organizadas por bloques (Proactividad, Calidad, etc.) + columna Objetivo al final |
 | **Objetivos** | Tarjeta de umbrales de referencia según el tipo de persona |
 
 La pestaña activa por defecto es el **último mes** disponible.
@@ -292,16 +292,22 @@ La pestaña activa por defecto es el **último mes** disponible.
 
 El `key` coincide con el nombre del Word sin el prefijo `informe_seguimiento_` ni el sufijo `_YYYY-MM.docx`. Ejemplos: `alvaro`, `emilio_rivas_audi`, `luis_ramos_rivas_a_chapa`.
 
-### Pestaña Evolución — métricas y objetivo
+### Pestaña Evolución — estructura por bloques
 
-Métricas extraídas por regex de los bullets del Word. La última columna es siempre **Objetivo** (fondo azul oscuro, texto dorado). Métricas por tipo:
+Las métricas se organizan en **bloques que replican las secciones del informe** (Proactividad comercial, Digital, Calidad, Procesos, Recursos generales, Carrocería, Personas, Rankings de marca, ONE KVPS). Cada bloque tiene su propio encabezado (azul oscuro) y su propia subtabla. Los bloques sin datos en ningún periodo no se renderizan.
+
+La última columna de cada subtabla es siempre **Objetivo** (fondo `#1A2B4A`, texto dorado `#FFD700`). Las celdas con evolución positiva se marcan en verde, las negativas en rojo.
+
+Los bloques disponibles por tipo están definidos en el dict `EVO_BLOCKS` del script. Métricas extraídas por regex de los bullets del Word. Métricas por tipo:
 
 | Tipo | Métricas en Evolución |
 |---|---|
 | Asesor | Desgaste total, Posición ranking, CAL1SEM, Full/Long Drive, Fidelidad, Horch Lauden, Score ONE, Service CAM, Diferidos, Multimedia |
-| Jefe mecánica | Desgaste total, Posición ranking, CAL1SEM, Productividad, Var Rec 2A, Var MO 2A, Horch Lauden, Score ONE, Service CAM, Diferidos, Multimedia |
-| Jefe chapa | CAL1SEM, Productividad, Var Rec 2A, Var MO 2A, Horch Lauden |
-| Industriales | Score ONE, Service CAM, Diferidos, Multimedia |
+| Jefe mecánica | Desgaste total, Posición ranking, CAL1SEM, Productividad, Var Rec 2A, Var MO 2A, Horch Lauden, ICC posición global, ICC Proactividad, ICC Digital, ICC Calidad, ICC Recursos, ICC Carrocería, ICC Personas, Score ONE, Service CAM, Diferidos, Multimedia |
+| Jefe chapa | CAL1SEM, Productividad, Var Rec 2A, Var MO 2A, Horch Lauden, ICC posición global, ICC Carrocería, ICC Personas |
+| Industriales | ICC posición global, ICC Proactividad, ICC Digital, ICC Calidad, ICC Recursos, ICC Carrocería, ICC Personas, Score ONE, Service CAM, Diferidos, Multimedia |
+
+Las métricas ICC se extraen del bullet de cabecera de módulo: `"ICC Módulo {nombre} — Posición X de Y | Puntuación del módulo: Z"`. Solo aparecen en la tabla si al menos un periodo tiene dato — en meses sin ranking ICC muestran "—".
 
 Los objetivos de productividad específicos por instalación (Ayala 105%, Rivas VW 89%, chapa 120%) se aplican automáticamente a la columna Objetivo.
 

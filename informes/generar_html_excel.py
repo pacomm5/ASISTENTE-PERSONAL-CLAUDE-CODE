@@ -176,6 +176,45 @@ EVO_OBJ = {
     },
 }
 
+# Bloques de evolución — agrupan las métricas por sección del informe
+EVO_BLOCKS = {
+    "asesor": [
+        ("Proactividad comercial", ["Desgaste total", "Posición ranking", "Full/Long Drive", "Fidelidad (%)"]),
+        ("Calidad",                ["CAL1SEM"]),
+        ("Horch Lauden",           ["Horch Lauden"]),
+        ("ONE KVPS",               ["Score ONE", "Service CAM (%)", "Diferidos (%)", "Multimedia"]),
+    ],
+    "jt_mecanica": [
+        ("Proactividad comercial", ["Desgaste total (%)", "Posición ranking", "Var Rec 2A (%)", "Var MO 2A (%)", "ICC Proactividad"]),
+        ("Digital",                ["ICC Digital"]),
+        ("Calidad",                ["CAL1SEM", "ICC Calidad"]),
+        ("Procesos",               ["Productividad (%)"]),
+        ("Recursos generales",     ["ICC Recursos"]),
+        ("Carrocería",             ["ICC Carrocería"]),
+        ("Personas",               ["ICC Personas"]),
+        ("Rankings de marca",      ["ICC posición global", "Horch Lauden"]),
+        ("ONE KVPS",               ["Score ONE", "Service CAM (%)", "Diferidos (%)", "Multimedia"]),
+    ],
+    "jt_chapa": [
+        ("Proactividad comercial", ["Var Rec 2A (%)", "Var MO 2A (%)"]),
+        ("Calidad",                ["CAL1SEM"]),
+        ("Procesos",               ["Productividad (%)"]),
+        ("Carrocería",             ["ICC Carrocería"]),
+        ("Personas",               ["ICC Personas"]),
+        ("Rankings de marca",      ["ICC posición global", "Horch Lauden"]),
+    ],
+    "industriales": [
+        ("Proactividad comercial", ["ICC Proactividad"]),
+        ("Digital",                ["ICC Digital"]),
+        ("Calidad",                ["ICC Calidad"]),
+        ("Recursos generales",     ["ICC Recursos"]),
+        ("Carrocería",             ["ICC Carrocería"]),
+        ("Personas",               ["ICC Personas"]),
+        ("Rankings de marca",      ["ICC posición global"]),
+        ("ONE KVPS",               ["Score ONE", "Service CAM (%)", "Diferidos (%)", "Multimedia"]),
+    ],
+}
+
 OBJETIVOS = {
     "asesor": [
         ("Desgaste total",     ">200 pts",              "≥200 pts",    "<200 pts — seguimiento prioritario"),
@@ -559,57 +598,76 @@ def render_mes_html_content(meta, sections, tabla_tareas):
 
 
 def render_evolucion_html(all_data, tipo, key):
-    """Tabla comparativa de métricas por mes con fila de objetivo al final."""
+    """Tabla comparativa por bloques/secciones del informe."""
     metrics_def = evo_metrics_for_tipo(tipo)
     periodos = [d[0] for d in all_data]
     periodos_label_list = [periodo_label(p) for p in periodos]
 
     data = {}
+    hib_map = {}
+    for name, _, hib in metrics_def:
+        data[name] = {}
+        hib_map[name] = hib
     for periodo, meta, sections, tareas, metricas in all_data:
-        for name, _, _ in metrics_def:
-            data.setdefault(name, {})[periodo] = metricas.get(name)
-
-    filas = [(name, hib) for name, _, hib in metrics_def
-             if any(v is not None for v in data[name].values())]
-
-    if not filas:
-        return '<p class="sin-datos">Sin métricas disponibles para mostrar.</p>'
+        for name in data:
+            data[name][periodo] = metricas.get(name)
 
     obj_dict = dict(EVO_OBJ.get(tipo, {}))
-    # Sobrescribir productividad con objetivo específico si aplica
     if key in OBJ_PROD_ESPECIFICO:
         obj_dict["Productividad (%)"] = f"{OBJ_PROD_ESPECIFICO[key]}%"
 
-    lines = ['<table class="tbl-evo"><thead><tr>']
-    lines.append('<th>Métrica</th>')
-    for pl in periodos_label_list:
-        lines.append(f'<th>{pl}</th>')
-    lines.append('<th>Objetivo</th>')
-    lines.append('</tr></thead><tbody>')
+    blocks = EVO_BLOCKS.get(tipo, [])
+    if not blocks:
+        return '<p class="sin-datos">Sin métricas disponibles para mostrar.</p>'
 
-    for name, higher_better in filas:
-        lines.append('<tr>')
-        lines.append(f'<td>{name}</td>')
-        values = [data[name].get(p) for p in periodos]
-        for i, val in enumerate(values):
-            if val is None:
-                lines.append('<td class="evo-null">—</td>')
-                continue
-            cls = ""
-            if i > 0:
-                prev = values[i - 1]
-                if prev is not None and isinstance(val, float) and isinstance(prev, float):
-                    if val > prev:
-                        cls = "evo-up" if higher_better else "evo-down"
-                    elif val < prev:
-                        cls = "evo-down" if higher_better else "evo-up"
-            display = str(val).replace(".", ",") if isinstance(val, float) else str(val)
-            lines.append(f'<td class="{cls}">{display}</td>')
-        obj_val = obj_dict.get(name, "—")
-        lines.append(f'<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">{obj_val}</td>')
-        lines.append('</tr>')
+    lines = []
+    any_block_rendered = False
 
-    lines.append('</tbody></table>')
+    for block_name, metric_names in blocks:
+        filas = [(name, hib_map.get(name, True)) for name in metric_names
+                 if name in data and any(v is not None for v in data[name].values())]
+        if not filas:
+            continue
+
+        any_block_rendered = True
+        lines.append('<div class="section" style="margin-bottom:16px;">')
+        lines.append(f'<div class="section-title">{block_name}</div>')
+        lines.append('<div class="section-body">')
+        lines.append('<table class="tbl-evo"><thead><tr>')
+        lines.append('<th>Métrica</th>')
+        for pl in periodos_label_list:
+            lines.append(f'<th>{pl}</th>')
+        lines.append('<th>Objetivo</th>')
+        lines.append('</tr></thead><tbody>')
+
+        for name, higher_better in filas:
+            lines.append('<tr>')
+            lines.append(f'<td>{name}</td>')
+            values = [data[name].get(p) for p in periodos]
+            for i, val in enumerate(values):
+                if val is None:
+                    lines.append('<td class="evo-null">—</td>')
+                    continue
+                cls = ""
+                if i > 0:
+                    prev = values[i - 1]
+                    if prev is not None and isinstance(val, float) and isinstance(prev, float):
+                        if val > prev:
+                            cls = "evo-up" if higher_better else "evo-down"
+                        elif val < prev:
+                            cls = "evo-down" if higher_better else "evo-up"
+                display = str(val).replace(".", ",") if isinstance(val, float) else str(val)
+                lines.append(f'<td class="{cls}">{display}</td>')
+            obj_val = obj_dict.get(name, "—")
+            lines.append(f'<td style="background:#1A2B4A;color:#FFD700;font-weight:700;">{obj_val}</td>')
+            lines.append('</tr>')
+
+        lines.append('</tbody></table>')
+        lines.append('</div></div>')
+
+    if not any_block_rendered:
+        return '<p class="sin-datos">Sin métricas disponibles para mostrar.</p>'
+
     return "\n".join(lines)
 
 
@@ -896,36 +954,38 @@ def render_mes_sheet(ws, meta, sections, tabla_tareas):
 
 
 def render_evolucion_sheet(ws, all_data, tipo, key):
-    """Escribe la hoja de evolución con columna Objetivo al final."""
+    """Escribe la hoja de evolución por bloques/secciones del informe."""
     metrics_def = evo_metrics_for_tipo(tipo)
     periodos = [d[0] for d in all_data]
     periodos_label_list = [periodo_label(p) for p in periodos]
     n_per = len(periodos)
+    n_cols = 1 + n_per + 1  # métrica + periodos + objetivo
 
-    # Anchos: A métrica, B..N+1 periodos, N+2 objetivo
     ws.column_dimensions["A"].width = 22
     for i in range(n_per):
         ws.column_dimensions[get_column_letter(i + 2)].width = 14
     ws.column_dimensions[get_column_letter(n_per + 2)].width = 14
 
     data = {}
+    hib_map = {}
+    for name, _, hib in metrics_def:
+        data[name] = {}
+        hib_map[name] = hib
     for periodo, meta, sections, tareas, metricas in all_data:
-        for name, _, _ in metrics_def:
-            data.setdefault(name, {})[periodo] = metricas.get(name)
-
-    filas = [(name, hib) for name, _, hib in metrics_def
-             if any(v is not None for v in data[name].values())]
+        for name in data:
+            data[name][periodo] = metricas.get(name)
 
     obj_dict = dict(EVO_OBJ.get(tipo, {}))
     if key in OBJ_PROD_ESPECIFICO:
         obj_dict["Productividad (%)"] = f"{OBJ_PROD_ESPECIFICO[key]}%"
 
-    FILL_OBJ_CELL = PatternFill("solid", fgColor="1A2B4A")
-    FONT_OBJ_CELL = Font(name="Calibri", bold=True, color="FFD700", size=10)
+    FILL_OBJ_CELL  = PatternFill("solid", fgColor="1A2B4A")
+    FONT_OBJ_CELL  = Font(name="Calibri", bold=True, color="FFD700", size=10)
+    FILL_BLOCK_HDR = PatternFill("solid", fgColor="1A2B4A")
+    FONT_BLOCK_HDR = Font(name="Calibri", bold=True, color="FFFFFF", size=11)
 
     row = 1
     ws.row_dimensions[row].height = 20
-    n_cols = 2 + n_per  # métrica + periodos + objetivo
     ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=n_cols)
     c = ws.cell(row=row, column=1, value="Evolución por periodo")
     c.fill = FILL_HEADER
@@ -933,45 +993,64 @@ def render_evolucion_sheet(ws, all_data, tipo, key):
     c.alignment = Alignment(horizontal="left", vertical="center")
     row += 2
 
-    # Cabecera
-    ws.row_dimensions[row].height = 18
-    xl_write(ws, row, 1, "Métrica", fill=FILL_TBL_HDR, font=FONT_WHITE_BOLD, border=BORDER_THIN,
-             align=Alignment(horizontal="left", vertical="center"))
-    for i, pl in enumerate(periodos_label_list):
-        xl_write(ws, row, i + 2, pl, fill=FILL_TBL_HDR, font=FONT_WHITE_BOLD, border=BORDER_THIN,
-                 align=Alignment(horizontal="center", vertical="center"))
-    xl_write(ws, row, n_per + 2, "Objetivo", fill=FILL_OBJ_CELL, font=FONT_OBJ_CELL,
-             border=BORDER_THIN, align=Alignment(horizontal="center", vertical="center"))
-    row += 1
+    blocks = EVO_BLOCKS.get(tipo, [])
 
-    for ri, (name, higher_better) in enumerate(filas):
-        ws.row_dimensions[row].height = 22
-        fill_base = FILL_ALT if ri % 2 == 1 else None
-        xl_write(ws, row, 1, name, fill=fill_base, font=FONT_DARK_BOLD, border=BORDER_THIN)
-        values = [data[name].get(p) for p in periodos]
-        for i, val in enumerate(values):
-            if val is None:
-                xl_write(ws, row, i + 2, "—", fill=fill_base,
-                         font=FONT_ITALIC, border=BORDER_THIN,
-                         align=Alignment(horizontal="center"))
-                continue
-            fill_cell = fill_base
-            font_cell = FONT_DARK
-            if i > 0:
-                prev = values[i - 1]
-                if prev is not None and isinstance(val, float) and isinstance(prev, float):
-                    if val > prev:
-                        fill_cell = FILL_EVO_UP if higher_better else FILL_EVO_DW
-                        font_cell = FONT_POS if higher_better else FONT_MEJ
-                    elif val < prev:
-                        fill_cell = FILL_EVO_DW if higher_better else FILL_EVO_UP
-                        font_cell = FONT_MEJ if higher_better else FONT_POS
-            xl_write(ws, row, i + 2, val, fill=fill_cell, font=font_cell, border=BORDER_THIN,
-                     align=Alignment(horizontal="center"))
-        obj_val = obj_dict.get(name, "—")
-        xl_write(ws, row, n_per + 2, obj_val, fill=FILL_OBJ_CELL, font=FONT_OBJ_CELL,
-                 border=BORDER_THIN, align=Alignment(horizontal="center"))
+    for block_name, metric_names in blocks:
+        filas = [(name, hib_map.get(name, True)) for name in metric_names
+                 if name in data and any(v is not None for v in data[name].values())]
+        if not filas:
+            continue
+
+        # Cabecera de bloque (azul oscuro, texto blanco)
+        ws.row_dimensions[row].height = 20
+        ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=n_cols)
+        c = ws.cell(row=row, column=1, value=block_name)
+        c.fill = FILL_BLOCK_HDR
+        c.font = FONT_BLOCK_HDR
+        c.alignment = Alignment(horizontal="left", vertical="center")
         row += 1
+
+        # Cabecera de columnas
+        ws.row_dimensions[row].height = 18
+        xl_write(ws, row, 1, "Métrica", fill=FILL_TBL_HDR, font=FONT_WHITE_BOLD, border=BORDER_THIN,
+                 align=Alignment(horizontal="left", vertical="center"))
+        for i, pl in enumerate(periodos_label_list):
+            xl_write(ws, row, i + 2, pl, fill=FILL_TBL_HDR, font=FONT_WHITE_BOLD, border=BORDER_THIN,
+                     align=Alignment(horizontal="center", vertical="center"))
+        xl_write(ws, row, n_per + 2, "Objetivo", fill=FILL_OBJ_CELL, font=FONT_OBJ_CELL,
+                 border=BORDER_THIN, align=Alignment(horizontal="center", vertical="center"))
+        row += 1
+
+        for ri, (name, higher_better) in enumerate(filas):
+            ws.row_dimensions[row].height = 22
+            fill_base = FILL_ALT if ri % 2 == 1 else None
+            xl_write(ws, row, 1, name, fill=fill_base, font=FONT_DARK_BOLD, border=BORDER_THIN)
+            values = [data[name].get(p) for p in periodos]
+            for i, val in enumerate(values):
+                if val is None:
+                    xl_write(ws, row, i + 2, "—", fill=fill_base,
+                             font=FONT_ITALIC, border=BORDER_THIN,
+                             align=Alignment(horizontal="center"))
+                    continue
+                fill_cell = fill_base
+                font_cell = FONT_DARK
+                if i > 0:
+                    prev = values[i - 1]
+                    if prev is not None and isinstance(val, float) and isinstance(prev, float):
+                        if val > prev:
+                            fill_cell = FILL_EVO_UP if higher_better else FILL_EVO_DW
+                            font_cell = FONT_POS if higher_better else FONT_MEJ
+                        elif val < prev:
+                            fill_cell = FILL_EVO_DW if higher_better else FILL_EVO_UP
+                            font_cell = FONT_MEJ if higher_better else FONT_POS
+                xl_write(ws, row, i + 2, val, fill=fill_cell, font=font_cell, border=BORDER_THIN,
+                         align=Alignment(horizontal="center"))
+            obj_val = obj_dict.get(name, "—")
+            xl_write(ws, row, n_per + 2, obj_val, fill=FILL_OBJ_CELL, font=FONT_OBJ_CELL,
+                     border=BORDER_THIN, align=Alignment(horizontal="center"))
+            row += 1
+
+        row += 1  # espacio entre bloques
 
 
 def render_objetivos_sheet(ws, tipo, key):
