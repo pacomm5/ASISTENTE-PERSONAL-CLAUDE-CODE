@@ -1,11 +1,21 @@
 ---
 name: informe-seguimiento
-description: Genera informes de seguimiento en formato Word (.docx) para asesores de servicio e instalaciones (jefes de taller) de Jarmauto. Incluye datos de rankings de desgaste, Iron Man e ICC por sección. Activar cuando el usuario pida un informe de seguimiento, un Word de seguimiento, o informe de instalación/persona.
+description: Genera informes de seguimiento en formato Word (.docx) para asesores de servicio e instalaciones (jefes de taller) de Jarmauto. Incluye datos de rankings de desgaste, Iron Man e ICC por sección. Activar cuando el usuario pida un informe de seguimiento, un Word de seguimiento, o informe de instalación/persona. También genera la versión HTML a partir del Word ya generado.
 ---
 
-# Skill: Informe de Seguimiento (Word)
+# Skill: Informe de Seguimiento (Word + HTML)
 
 Genera documentos Word (.docx) estructurados para hacer seguimiento de instalaciones y asesores en Jarmauto. Usa `python-docx` para construir el documento.
+
+## Flujo obligatorio Word → HTML / Excel
+
+El Word es siempre el documento de trabajo. El HTML y el Excel son siempre derivados del Word, nunca al revés.
+
+1. **Generar el Word** con los datos de rankings del vault.
+2. **El usuario revisa y completa el Word**: tareas pendientes, grado de cumplimiento, notas específicas.
+3. **Generar el HTML y/o Excel** leyendo el Word ya cerrado con `python-docx` como única fuente de datos.
+
+No generar HTML ni Excel antes de que el Word esté revisado y cerrado. Si el usuario pide HTML o Excel sin haber generado el Word antes, avisar y generar primero el Word.
 
 **Ejecutable Python obligatorio:** `/opt/homebrew/bin/python3` (el Python de sistema 3.9 no tiene acceso al módulo docx aunque esté instalado).
 
@@ -250,8 +260,79 @@ Cuando una instalación tiene mecánica y chapa, los datos ICC del módulo de Ca
 2. Guardarlos en el vault como archivos de referencia (`Ranking X - AAAA-MM.md`).
 3. Preguntar si hay cambios en el equipo (altas, bajas, cambios de instalación).
 4. Leer los informes del periodo anterior para identificar tareas con Grado de cumplimentación inferior a 100%.
-5. Generar todos los informes con los datos nuevos, mostrando evolución respecto al periodo anterior donde corresponda.
+5. Generar todos los informes Word con los datos nuevos, mostrando evolución respecto al periodo anterior donde corresponda.
 6. Arrastrar solo las tareas con Grado de cumplimentación inferior a 100% (o vacío) al nuevo periodo.
+7. El usuario revisa y completa cada Word (tareas pendientes, grado de cumplimiento, notas).
+8. Una vez cerrado el Word, generar el HTML y el Excel correspondientes leyendo el Word como fuente de datos.
+
+---
+
+## Generación del HTML y Excel a partir del Word
+
+El HTML y el Excel se generan siempre **después** de que el Word esté revisado y cerrado. Nunca antes. Ambos formatos leen el Word como única fuente de datos y producen el mismo contenido con el mismo estilo visual.
+
+### Lectura del Word
+
+Usar `python-docx` para extraer todo el contenido:
+
+```python
+from docx import Document
+
+def leer_informe_word(path):
+    doc = Document(path)
+    secciones = {}
+    seccion_actual = None
+    bloque_actual = None  # "positivo" o "mejorar"
+
+    for p in doc.paragraphs:
+        texto = p.text.strip()
+        if not texto:
+            continue
+        if p.style.name == 'Heading 1':
+            seccion_actual = texto
+            secciones[seccion_actual] = {"positivo": [], "mejorar": [], "tabla": None}
+            bloque_actual = None
+        elif 'Puntos positivos' in texto:
+            bloque_actual = "positivo"
+        elif 'Puntos a mejorar' in texto:
+            bloque_actual = "mejorar"
+        elif seccion_actual and bloque_actual:
+            secciones[seccion_actual][bloque_actual].append(texto)
+
+    # Leer tablas (tareas pendientes)
+    for table in doc.tables:
+        headers = [c.text.strip() for c in table.rows[0].cells]
+        if 'Tarea' in headers:
+            filas = []
+            for row in table.rows[1:]:
+                filas.append([c.text.strip() for c in row.cells])
+            secciones['Tareas pendientes']['tabla'] = filas
+
+    return secciones
+```
+
+### Diferencias por tipo de informe
+
+No todos los informes tienen los mismos módulos. Al generar el HTML, omitir secciones vacías o sin datos:
+
+| Tipo | Módulos presentes | Ausentes |
+|---|---|---|
+| Jefe taller mecánica (Emilio, Izquierdo, Alberto, Carlos, Fernando RVW) | Todos: Proactividad, Digital, Calidad, Procesos, Recursos, Carrocería, Personas, Rankings, CX, ONE, Tareas | — |
+| Jefe taller chapa (Luis Ramos, Pericles) | Proactividad (solo Var Rec/MO), Carrocería, Personas, CX, Tareas | Sin desgaste propio, sin ONE, sin Procesos |
+| Fernando Industriales | Calidad, Carrocería, Recursos, Personas, CX, Tareas | Sin Iron Man, sin Procesos, sin ONE propio |
+| Asesor de servicio | Proactividad (desgaste individual), Calidad (CAL1SEM), CX, ONE, Tareas | Sin módulos ICC de instalación |
+
+### Naming
+
+Mismo nombre que el Word cambiando la extensión:
+- HTML: `informe_seguimiento_{nombre}_{instalacion}_{periodo}.html`
+- Excel: `informe_seguimiento_{nombre}_{instalacion}_{periodo}.xlsx`
+
+### Colores fijos
+
+- Verde positivo: `#1A7A3C`
+- Rojo mejorar: `#C0392B`
+- Azul cabecera: `#1A2B4A`
 
 ---
 

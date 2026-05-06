@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe de Seguimiento — Emilio / Rivas Audi — Marzo 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 14px; color: #1a1a1a; background: #f4f5f7; padding: 32px 16px;
+  }
+  .page { max-width: 920px; margin: 0 auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; }
+
+  /* CABECERA */
+  .header { background: #1a2b4a; color: #fff; padding: 36px 40px 28px; }
+  .header-brand { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #8fa8c8; margin-bottom: 10px; }
+  .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .header h2 { font-size: 15px; font-weight: 400; color: #a8c0d8; margin-bottom: 20px; }
+  .header-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .header-meta span { font-size: 12px; color: #8fa8c8; }
+  .header-meta strong { color: #d0e4f5; }
+
+  /* RESUMEN */
+  .summary-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid #e8eaf0; }
+  .summary-item { padding: 18px 20px; border-right: 1px solid #e8eaf0; text-align: center; }
+  .summary-item:last-child { border-right: none; }
+  .summary-item .value { font-size: 22px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+  .summary-item .label { font-size: 11px; color: #7a8399; text-transform: uppercase; letter-spacing: 0.5px; }
+  .summary-item.ok .value { color: #1a7a3c; }
+  .summary-item.warn .value { color: #c0392b; }
+  .summary-item.neutral .value { color: #1a2b4a; }
+
+  /* CONTENIDO */
+  .content { padding: 0 40px 40px; }
+
+  /* SECCIONES */
+  .section { margin-top: 28px; border: 1px solid #e8eaf0; border-radius: 6px; overflow: hidden; }
+  .section-header {
+    background: #f0f3f8; padding: 12px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #e8eaf0; gap: 12px; flex-wrap: wrap;
+  }
+  .section-header-left { display: flex; align-items: center; gap: 10px; }
+  .section-number {
+    background: #1a2b4a; color: #fff; font-size: 11px; font-weight: 700;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #1a2b4a; }
+  .module-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .badge { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 10px; white-space: nowrap; }
+  .badge-pos { background: #1a2b4a; color: #fff; }
+  .badge-score { background: #e8edf5; color: #1a2b4a; }
+  .badge-top20 { background: #ffd700; color: #5a3e00; }
+  .badge-media { background: #f0f3f8; color: #555; border: 1px solid #d0d5e0; }
+
+  .section-body { padding: 16px 18px; }
+
+  /* BLOQUES */
+  .block { margin-bottom: 14px; }
+  .block:last-child { margin-bottom: 0; }
+  .block-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .block-label.positivo { color: #1a7a3c; }
+  .block-label.mejorar { color: #c0392b; }
+  .block-label::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .block-label.positivo::before { background: #1a7a3c; }
+  .block-label.mejorar::before { background: #c0392b; }
+
+  ul.items { list-style: none; padding: 0; }
+  ul.items li { padding: 5px 10px 5px 14px; border-left: 3px solid #e8eaf0; margin-bottom: 4px; font-size: 13px; line-height: 1.5; color: #333; }
+  ul.items.positivo li { border-left-color: #1a7a3c; background: #f4fbf6; }
+  ul.items.mejorar li { border-left-color: #c0392b; background: #fdf4f3; }
+
+  /* TABLAS */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+  th { background: #1a2b4a; color: #fff; padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f2f5; vertical-align: middle; line-height: 1.4; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f9fafb; }
+  tr.total-row td { background: #e8edf5; font-weight: 700; color: #1a2b4a; }
+
+  .tag-ok { display:inline-block; background:#e6f5ec; color:#1a7a3c; font-size:11px; font-weight:700; padding:2px 7px; border-radius:10px; }
+  .tag-warn { display:inline-block; background:#fdecea; color:#c0392b; font-size:11px; font-weight:700; padding:2px 7px; border-radius:10px; }
+  .tag-neutral { display:inline-block; background:#eef1f8; color:#1a2b4a; font-size:11px; font-weight:700; padding:2px 7px; border-radius:10px; }
+  .tag-excl { display:inline-block; background:#fff3e0; color:#b35a00; font-size:11px; font-weight:700; padding:2px 7px; border-radius:10px; }
+
+  .divider { height: 1px; background: #e8eaf0; margin: 14px 0; }
+  .fixed-task { background: #fff8e6; border: 1px solid #f0c040; border-radius: 4px; padding: 10px 14px; font-size: 13px; color: #7a5c00; margin-bottom: 12px; }
+  .fixed-task strong { color: #5a4000; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e8eaf0; font-size: 11px; color: #aaa; text-align: center; }
+
+  @media print { body { background: #fff; padding: 0; } .page { box-shadow: none; border-radius: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-brand">Jarmauto — Informe de Seguimiento</div>
+    <h1>Emilio</h1>
+    <h2>Jefe de Taller — Rivas Audi (Mecánica)</h2>
+    <div class="header-meta">
+      <span><strong>Periodo:</strong> Marzo 2026</span>
+      <span><strong>Instalación:</strong> 51AQ1 AU</span>
+      <span><strong>Red Audi:</strong> 143 instalaciones</span>
+      <span><strong>Generado:</strong> 06/04/2026</span>
+    </div>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-item ok"><div class="value">3/143</div><div class="label">ICC Global Audi</div></div>
+    <div class="summary-item ok"><div class="value">7,85</div><div class="label">Puntuación ICC</div></div>
+    <div class="summary-item warn"><div class="value">4/8</div><div class="label">Cuadro CX 2026</div></div>
+    <div class="summary-item neutral"><div class="value">252,57%</div><div class="label">Desgaste Total</div></div>
+  </div>
+
+  <div class="content">
+
+    <!-- 1. PROACTIVIDAD COMERCIAL -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">1</div>
+          <div class="section-title">Proactividad Comercial</div>
+        </div>
+        <div class="module-meta">
+          <span class="badge badge-top20">TOP 20</span>
+          <span class="badge badge-pos">Pos. 3/143</span>
+          <span class="badge badge-score">7,85 pts</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="block">
+          <div class="block-label positivo">Positivo</div>
+          <ul class="items positivo">
+            <li><strong>Desgaste total: 252,57%</strong> — Posición 2/7 instalaciones Jarmauto. Por encima del umbral de seguimiento (220%). Detalle: Amortiguadores 32,66% | Baterías 11,19% | Discos 25,50% | Escobillas 50,78% | Neumáticos 57,49% | Parabrisas 15,66% | Pastillas 59,28%.</li>
+            <li><strong>Var. recambios 2 años: +31,37%.</strong></li>
+            <li><strong>Var. mano de obra 2 años: +41,38%.</strong></li>
+            <li><strong>ICC - Ext. Garantía: 84,8%</strong> (media 65,5%, Top20 91,8%). Fortaleza, muy por encima de la media.</li>
+            <li><strong>ICC - Sust. Neumáticos: 27,2%</strong> (media 24,1%, Top20 46,0%). Supera ligeramente la media.</li>
+            <li><strong>ICC - Radar (Desgaste): 116,69%</strong> (media 98,3%, Top20 162,8%). Supera el objetivo teórico del 100%.</li>
+            <li><strong>ICC - At. Comerciales: 7,56%</strong> (media 6,3%, Top20 20,96%). Ratio por encima de la media.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <div class="block-label mejorar">A mejorar</div>
+          <ul class="items mejorar">
+            <li><strong>ICC - RGPD: 80,4%</strong> (media 72,4%, Top20 90,3%). Puntuación 0,00 por no alcanzar el umbral del 85%.</li>
+            <li><strong>ICC - Accesorios: sin actividad registrada (#DIV/0).</strong> Crítico.</li>
+            <li><strong>ICC - Campañas Averías: 0%</strong> (media 10%, Top20 10%). Oportunidad de negocio perdida. Crítico.</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <table>
+          <tr><th>Indicador ICC</th><th>Rivas Audi</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr>
+          <tr><td>Ext. Garantía</td><td>84,8%</td><td>65,5%</td><td>91,8%</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>Sust. Neumáticos</td><td>27,2%</td><td>24,1%</td><td>46,0%</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>Radar Desgaste</td><td>116,69%</td><td>98,3%</td><td>162,8%</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>At. Comerciales</td><td>7,56%</td><td>6,3%</td><td>20,96%</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>RGPD</td><td>80,4%</td><td>72,4%</td><td>90,3%</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr><td>Accesorios</td><td>#DIV/0</td><td>—</td><td>—</td><td><span class="tag-warn">Crítico</span></td></tr>
+          <tr><td>Campañas Averías</td><td>0%</td><td>10%</td><td>10%</td><td><span class="tag-warn">Crítico</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2. DIGITAL -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">2</div>
+          <div class="section-title">Digital</div>
+        </div>
+        <div class="module-meta">
+          <span class="badge badge-pos">Pos. 21/143</span>
+          <span class="badge badge-score">5,95 pts</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="block">
+          <div class="block-label positivo">Positivo</div>
+          <ul class="items positivo">
+            <li><strong>ICC - Audi CAM: 5,45%</strong> (media 5,2%, Top20 18,4%). En línea con la media.</li>
+            <li><strong>ICC - Recovery Conectividad: 56,45%</strong> (media 18,1%, Top20 47,69%). Excelente, superior al Top 20.</li>
+            <li><strong>ICC - ONE Score: 6,7</strong> (media 6,6, Top20 8,6). En línea con la media.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <div class="block-label mejorar">A mejorar</div>
+          <ul class="items mejorar">
+            <li><strong>ICC - Cita Online: 0,0%</strong> (media 18,1%, Top20 47,6%). Canal totalmente inactivo. Crítico.</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <table>
+          <tr><th>Indicador ICC</th><th>Rivas Audi</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr>
+          <tr><td>Audi CAM</td><td>5,45%</td><td>5,2%</td><td>18,4%</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>Recovery Conectividad</td><td>56,45%</td><td>18,1%</td><td>47,69%</td><td><span class="tag-excl">Excelente</span></td></tr>
+          <tr><td>ONE Score</td><td>6,7</td><td>6,6</td><td>8,6</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>Cita Online</td><td>0,0%</td><td>18,1%</td><td>47,6%</td><td><span class="tag-warn">Crítico</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3. CALIDAD -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">3</div>
+          <div class="section-title">Calidad</div>
+        </div>
+        <div class="module-meta">
+          <span class="badge badge-pos">Pos. 66/143</span>
+          <span class="badge badge-score">5,99 pts</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="block">
+          <div class="block-label positivo">Positivo</div>
+          <ul class="items positivo">
+            <li><strong>ICC - CEM Satisfacción General: 4,8</strong> (media 4,69, Top20 5,0). Buena percepción del cliente.</li>
+            <li><strong>ICC - Audi Move: 93,3%</strong> (media 56,2%, Top20 92,5%). Excelente, nivel Top 20.</li>
+            <li><strong>ICC - Transporte Alternativo: 67,2%</strong> (media 56,1%). Muy por encima de la media.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <div class="block-label mejorar">A mejorar</div>
+          <ul class="items mejorar">
+            <li><strong>CAL1SEM: 4,00</strong> (10 puntos Iron Man). Por debajo de 5. Revisar encuestas de satisfacción.</li>
+            <li><strong>ICC - ICT (Incidencias): 0,8%</strong> (media 0,6%, Top20 0%). Ratio de quejas superior a la media.</li>
+            <li><strong>ICC - Contacto Proceso AU: 55,0%</strong> (media 74,18%, Top20 96,33%). Fallo en la comunicación proactiva.</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <table>
+          <tr><th>Indicador ICC</th><th>Rivas Audi</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr>
+          <tr><td>CEM Satisfacción General</td><td>4,8</td><td>4,69</td><td>5,0</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>Audi Move</td><td>93,3%</td><td>56,2%</td><td>92,5%</td><td><span class="tag-excl">Excelente</span></td></tr>
+          <tr><td>Transporte Alternativo</td><td>67,2%</td><td>56,1%</td><td>—</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>ICT (Incidencias)</td><td>0,8%</td><td>0,6%</td><td>0%</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr><td>Contacto Proceso AU</td><td>55,0%</td><td>74,18%</td><td>96,33%</td><td><span class="tag-warn">Mejorar</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 4. PROCESOS -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">4</div>
+          <div class="section-title">Procesos — Productividad</div>
+        </div>
+        <div class="module-meta">
+          <span class="badge badge-score">Objetivo: 93%</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="block">
+          <div class="block-label mejorar">A mejorar</div>
+          <ul class="items mejorar">
+            <li><strong>Productividad: 90,72%</strong> sobre objetivo 93% (-2,28 pp). Objetivo no alcanzado.</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <table>
+          <tr><th>Instalación</th><th>Productividad</th><th>Objetivo</th><th>Diferencia</th><th>Estado</th></tr>
+          <tr><td>Rivas Volkswagen</td><td>95,42%</td><td>89%</td><td>+6,42 pp</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>Canarias</td><td>94,29%</td><td>93%</td><td>+1,29 pp</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>Moncloa (VW/AU)</td><td>92,69%</td><td>93%</td><td>-0,31 pp</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr><td><strong>Rivas Audi</strong></td><td><strong>90,72%</strong></td><td>93%</td><td>-2,28 pp</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr><td>Vara</td><td>89,61%</td><td>93%</td><td>-3,39 pp</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr><td>Ayala</td><td>100,87%</td><td>105%</td><td>-4,13 pp</td><td><span class="tag-warn">Mejorar</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 5. RECURSOS GENERALES -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">5</div>
+          <div class="section-title">Recursos Generales</div>
+        </div>
+        <div class="module-meta">
+          <span class="badge badge-pos">Pos. 115/143</span>
+          <span class="badge badge-score">4,08 pts</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="block">
+          <div class="block-label mejorar">A mejorar</div>
+          <ul class="items mejorar">
+            <li><strong>ICC - Ocupación (PLATÓN): 78,6%</strong> (media 88,51%, Top20 98,06%). Taller con capacidad ociosa.</li>
+            <li><strong>ICC - T. Cita Mecánica: 22,8 días</strong> (media 18,22, Top20 15,32). Esperas excesivas para el cliente. Crítico.</li>
+            <li><strong>ICC - T. Ciclo Carrocería: 10,2 días</strong> (media 6,62, Top20 5,78). Proceso de chapa lento. Crítico.</li>
+            <li><strong>ICC - Mantenimientos &lt;24h: 30,9%</strong> (media 44,92%, Top20 70,07%). Baja rapidez en mantenimientos.</li>
+            <li><strong>ICC - Pedido Talentia: 63%</strong> (media 90,9%, Top20 230,8%). Gestión de pedidos mejorable.</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <table>
+          <tr><th>Indicador ICC</th><th>Rivas Audi</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr>
+          <tr><td>Ocupación PLATÓN</td><td>78,6%</td><td>88,51%</td><td>98,06%</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr><td>T. Cita Mecánica</td><td>22,8 días</td><td>18,22 días</td><td>15,32 días</td><td><span class="tag-warn">Crítico</span></td></tr>
+          <tr><td>T. Ciclo Carrocería</td><td>10,2 días</td><td>6,62 días</td><td>5,78 días</td><td><span class="tag-warn">Crítico</span></td></tr>
+          <tr><td>Mantenimientos &lt;24h</td><td>30,9%</td><td>44,92%</td><td>70,07%</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr><td>Pedido Talentia</td><td>63%</td><td>90,9%</td><td>230,8%</td><td><span class="tag-warn">Mejorar</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 6. CARROCERÍA -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">6</div>
+          <div class="section-title">Carrocería</div>
+        </div>
+        <div class="module-meta">
+          <span class="badge badge-top20">TOP 20</span>
+          <span class="badge badge-pos">Pos. 15/143</span>
+          <span class="badge badge-score">7,67 pts</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="block">
+          <div class="block-label positivo">Positivo</div>
+          <ul class="items positivo">
+            <li><strong>ICC - Fidelidad Mecánica: 41,0%</strong> (media 5,6%, Top20 1,9%). Derivación masiva de clientes a chapa.</li>
+            <li><strong>ICC - CEM Carrocería: 5,0</strong> (media 4,78, Top20 5,0). Nivel de satisfacción Top 20. Excelente.</li>
+            <li><strong>ICC - Recup. Siniestros: 100%</strong> (media 96,7%, Top20 100%). Gestión perfecta del programa.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <div class="block-label mejorar">A mejorar</div>
+          <ul class="items mejorar">
+            <li><strong>ICC - Retención Parque: -14,4%</strong> (media -10,7%, Top20 1,9%). Caída superior a la media nacional.</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <table>
+          <tr><th>Indicador ICC</th><th>Rivas Audi</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr>
+          <tr><td>Fidelidad Mecánica</td><td>41,0%</td><td>5,6%</td><td>1,9%</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>CEM Carrocería</td><td>5,0</td><td>4,78</td><td>5,0</td><td><span class="tag-excl">Top 20</span></td></tr>
+          <tr><td>Recup. Siniestros</td><td>100%</td><td>96,7%</td><td>100%</td><td><span class="tag-excl">Top 20</span></td></tr>
+          <tr><td>Retención Parque</td><td>-14,4%</td><td>-10,7%</td><td>1,9%</td><td><span class="tag-warn">Mejorar</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 7. PERSONAS -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">7</div>
+          <div class="section-title">Personas</div>
+        </div>
+        <div class="module-meta">
+          <span class="badge badge-pos">Pos. 76/143</span>
+          <span class="badge badge-score">7,94 pts</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="block">
+          <div class="block-label positivo">Positivo</div>
+          <ul class="items positivo">
+            <li><strong>ICC - Formación (% No Asistencia): 9,6%</strong> (media 10,5%, Top20 0,0%). Mejor asistencia que la media.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <div class="block-label mejorar">A mejorar</div>
+          <ul class="items mejorar">
+            <li><strong>ICC - Formación (% Certificados): 98,6%</strong> (media 99,29%, Top20 100%). Ligeramente por debajo de la media.</li>
+            <li><strong>ICC - Retención Personal: 95,7%</strong> (media 99,2%, Top20 100%). Estabilidad de plantilla por mejorar.</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <table>
+          <tr><th>Indicador ICC</th><th>Rivas Audi</th><th>Media red</th><th>Top 20</th><th>Estado</th></tr>
+          <tr><td>Formación (% No Asistencia)</td><td>9,6%</td><td>10,5%</td><td>0,0%</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>Formación (% Certificados)</td><td>98,6%</td><td>99,29%</td><td>100%</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr><td>Retención Personal</td><td>95,7%</td><td>99,2%</td><td>100%</td><td><span class="tag-warn">Mejorar</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 8. RANKINGS DE MARCA -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">8</div>
+          <div class="section-title">Rankings de Marca</div>
+        </div>
+        <div class="module-meta">
+          <span class="badge badge-top20">TOP 20 Global</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <table>
+          <tr><th>Competición</th><th>Resultado</th><th>Referencia</th><th>Estado</th></tr>
+          <tr><td>ICC Global Audi</td><td>Pos. 3/143 — 7,85 pts</td><td>Top 20: pos. ≤20</td><td><span class="tag-excl">Top 20</span></td></tr>
+          <tr><td>Iron Man — ICC puesto</td><td>Pos. 3 (Audi)</td><td>Top 10: posición destacada</td><td><span class="tag-excl">Top 10</span></td></tr>
+          <tr><td>Iron Man — CAL1SEM</td><td>4,00 → 10 pts</td><td>&lt;4→0 | 4–5→10 | 5–6→20 | 6–7→30 | &gt;7→50</td><td><span class="tag-neutral">Regular</span></td></tr>
+          <tr><td>Horch Lauden</td><td>Puesto 26</td><td>≤20 destacado · ≤50 aceptable · &gt;50 atención</td><td><span class="tag-neutral">Aceptable</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 9. CUADRO CX 2026 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">9</div>
+          <div class="section-title">Cuadro de Calidad CX 2026 — Audi Service (51AQ1 AU)</div>
+        </div>
+        <div class="module-meta">
+          <span class="badge badge-score">4/8 pts</span>
+          <span style="background:#fdecea;color:#c0392b;font-size:11px;font-weight:700;padding:3px 9px;border-radius:10px;">Rem: 3–4 €/h</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="block">
+          <div class="block-label positivo">Positivo</div>
+          <ul class="items positivo">
+            <li><strong>Conectividad Posventa (ASR): 50,00%</strong> — 2/2 pts. Por encima del umbral ≥45%.</li>
+            <li><strong>Medidas de Servicio (EC28):</strong> — 1/1 pt. Cumple ≤5%.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <div class="block-label mejorar">A mejorar</div>
+          <ul class="items mejorar">
+            <li><strong>Satisfacción General (CEM Q4): 4,71</strong> — 1/2 pts. Necesita ≥4,80 para 2 pts. Faltan 0,09 puntos.</li>
+            <li><strong>Información Proceso (TRS): 63,33%</strong> — 0/2 pts. Necesita ≥80% para el primer punto. Diferencia: -16,67 pp.</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <table>
+          <tr><th>KPI</th><th>Valor</th><th>0 pts</th><th>1 pt</th><th>2 pts</th><th>Obtenido</th><th>Estado</th></tr>
+          <tr><td>Satisfacción General (CEM Q4)</td><td>4,71</td><td>&lt;4,60</td><td>≥4,60</td><td>≥4,80</td><td>1/2</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr><td>Medidas de Servicio (EC28)</td><td>—</td><td>&gt;5%</td><td>≤5%</td><td>≤1%</td><td>1/1</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>Conectividad Posventa (ASR)</td><td>50,00%</td><td>&lt;25%</td><td>≥25%</td><td>≥45%</td><td>2/2</td><td><span class="tag-ok">Bien</span></td></tr>
+          <tr><td>Información Proceso (TRS)</td><td>63,33%</td><td>&lt;80%</td><td>≥80%</td><td>≥90%</td><td>0/2</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr class="total-row"><td colspan="5">Total</td><td>4/8 pts</td><td>Remuneración: 3–4 €/h</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 10. ONE KVPS -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">10</div>
+          <div class="section-title">ONE KVPS — Semana 13 (KVPS 00158 — Rivas Audi)</div>
+        </div>
+        <div class="module-meta">
+          <span class="badge badge-score">Score: 6,3</span>
+          <span class="badge badge-media">Media equipo: 6,9</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="block">
+          <div class="block-label positivo">Positivo</div>
+          <ul class="items positivo">
+            <li><strong>Diferidos Acum.: 23%</strong> (media equipo: 11%; bueno ≥8%). Muy por encima de la media.</li>
+            <li><strong>Multimedia Acum.: 6,6</strong> (media equipo: 6,0; bueno ≥5). Por encima de la media.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <div class="block-label mejorar">A mejorar</div>
+          <ul class="items mejorar">
+            <li><strong>Score SEM: 6,3</strong> (media equipo: 6,9). Por debajo de la media.</li>
+            <li><strong>Service CAM Acum.: 6%</strong> (media equipo: 6%; bueno ≥8%). En rango regular.</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <table>
+          <tr><th>KPI</th><th>Rivas Audi</th><th>Media equipo</th><th>Umbral bueno</th><th>Estado</th></tr>
+          <tr><td>Score SEM</td><td>6,3</td><td>6,9</td><td>Por encima media</td><td><span class="tag-warn">Mejorar</span></td></tr>
+          <tr><td>Service CAM Acum.</td><td>6%</td><td>6%</td><td>≥8%</td><td><span class="tag-neutral">Regular</span></td></tr>
+          <tr><td>Diferidos Acum.</td><td>23%</td><td>11%</td><td>≥8%</td><td><span class="tag-excl">Excelente</span></td></tr>
+          <tr><td>Multimedia Acum.</td><td>6,6</td><td>6,0</td><td>≥5</td><td><span class="tag-ok">Bien</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 11. TAREAS PENDIENTES -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <div class="section-number">11</div>
+          <div class="section-title">Tareas Pendientes</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <table>
+          <tr><th>Tarea</th><th>Responsable</th><th>Fecha límite</th><th>Grado de cumplimentación</th></tr>
+          <tr><td>Utilizar el Laser de desgaste</td><td></td><td></td><td></td></tr>
+          <tr><td>Puntos de Calidad</td><td></td><td></td><td></td></tr>
+          <tr><td>Índice de reclamaciones a clientes</td><td></td><td></td><td></td></tr>
+          <tr><td>Productividad</td><td></td><td></td><td></td></tr>
+          <tr><td>Ocupación PLATÓN</td><td></td><td></td><td></td></tr>
+          <tr><td>Mantenimientos &lt;24h</td><td></td><td></td><td></td></tr>
+          <tr><td>Score ONE</td><td></td><td></td><td></td></tr>
+          <tr><td>Service CAM</td><td></td><td></td><td></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer">
+      Jarmauto · Informe generado el 06/04/2026 · Datos de referencia: Marzo 2026
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

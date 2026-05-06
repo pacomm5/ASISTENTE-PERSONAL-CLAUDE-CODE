@@ -47,11 +47,15 @@ _(Añade aquí lo que vaya apareciendo. Vacía esto regularmente.)_
 	Lo único que necesito que me confirmes en ese momento es si hay cambios en el equipo (altas, bajas, cambios de instalación) o si quieres añadir alguna tarea nueva fija. El resto lo ejecuto directamente.
 - posibles mecánico prácticas. donde viven?
 	- tres en rivas audi. se quedaría 1
+		- pendiente de que me de la documentación del que falta. 
 		- donde viven.
+		- entregada la documentacion para el 1 de junio de ISMAEL RODRIGUEZ
+		- ADRIAN YA HA EMPEZADO EN MONCLOA. 
 	- **uno en ayala**
 		- **ya está enviada documentación a alejandra. en principio para primeros de mes**. Maxsim para a ser mecánico de moncloa y se queda con el mecánico nuevo. 
 	- uno en rivas volkswagen
-		- donde viven.
+		- el de fernando ya he mandado la documentación. 
+		- me comenta que tiene otro. 
 	- dos vara. 1 se quedaría en vara.
 		- De uno ya he enviado los datos a Alejandra. 
 		- el otro entiendo que está dificil, porque dice que tiene que hablar con su padre. 
