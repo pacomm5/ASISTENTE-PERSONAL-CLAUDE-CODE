@@ -749,7 +749,6 @@ def gen_html_multitab(key, all_data, tipo, base):
         tid = f"tab-{periodo}"
         lines.append(f'<button class="tab-btn {active}" onclick="showTab(\'{tid}\', this)">{pl}</button>')
     lines.append('<button class="tab-btn" onclick="showTab(\'tab-evo\', this)">Evolución</button>')
-    lines.append('<button class="tab-btn" onclick="showTab(\'tab-obj\', this)">Objetivos</button>')
     lines.append('</nav>')
 
     # Tab contents — meses
@@ -765,13 +764,6 @@ def gen_html_multitab(key, all_data, tipo, base):
     lines.append('<div class="section"><div class="section-title">Evolución por periodo</div>')
     lines.append('<div class="section-body">')
     lines.append(render_evolucion_html(all_data, tipo, key))
-    lines.append('</div></div></div>')
-
-    # Tab objetivos
-    lines.append('<div id="tab-obj" class="tab-content">')
-    lines.append('<div class="section"><div class="section-title">Objetivos y umbrales de referencia</div>')
-    lines.append('<div class="section-body">')
-    lines.append(render_objetivos_html(tipo, key))
     lines.append('</div></div></div>')
 
     lines.append('</div></body></html>')
@@ -1132,9 +1124,6 @@ def gen_excel_multitab(key, all_data, tipo, base):
 
     ws_evo = wb.create_sheet(title="Evolución")
     render_evolucion_sheet(ws_evo, all_data, tipo, key)
-
-    ws_obj = wb.create_sheet(title="Objetivos")
-    render_objetivos_sheet(ws_obj, tipo, key)
 
     wb.save(out_path)
     return out_path
