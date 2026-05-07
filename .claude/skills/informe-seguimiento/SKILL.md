@@ -302,12 +302,14 @@ Los bloques disponibles por tipo están definidos en el dict `EVO_BLOCKS` del sc
 
 | Tipo | Métricas en Evolución |
 |---|---|
-| Asesor | Desgaste total, Posición ranking, CAL1SEM, Full/Long Drive, Fidelidad, Horch Lauden, Score ONE, Service CAM, Diferidos, Multimedia |
-| Jefe mecánica | Desgaste total, Posición ranking, CAL1SEM, Productividad, Var Rec 2A, Var MO 2A, Horch Lauden, ICC posición global, ICC Proactividad, ICC Digital, ICC Calidad, ICC Recursos, ICC Carrocería, ICC Personas, Score ONE, Service CAM, Diferidos, Multimedia |
-| Jefe chapa | CAL1SEM, Productividad, Var Rec 2A, Var MO 2A, Horch Lauden, ICC posición global, ICC Carrocería, ICC Personas |
-| Industriales | ICC posición global, ICC Proactividad, ICC Digital, ICC Calidad, ICC Recursos, ICC Carrocería, ICC Personas, Score ONE, Service CAM, Diferidos, Multimedia |
+| Asesor | Desgaste total, Posición ranking, CAL1SEM, Full/Long Drive, Fidelidad, Horch Lauden, **CX total (/8)**, Score ONE, Service CAM, Diferidos, Multimedia |
+| Jefe mecánica | Desgaste total, Posición ranking, CAL1SEM, Productividad, Var Rec 2A, Var MO 2A, Horch Lauden, **CX total (/8)**, ICC posición global, ICC Proactividad, ICC Digital, ICC Calidad, ICC Recursos, ICC Carrocería, ICC Personas, Score ONE, Service CAM, Diferidos, Multimedia |
+| Jefe chapa | CAL1SEM, Productividad, Var Rec 2A, Var MO 2A, Horch Lauden, **CX total (/8)**, ICC posición global, ICC Carrocería, ICC Personas |
+| Industriales | ICC posición global, ICC Proactividad, ICC Digital, ICC Calidad, ICC Recursos, ICC Carrocería, ICC Personas, **CX total (/8)**, Score ONE, Service CAM, Diferidos, Multimedia |
 
 Las métricas ICC se extraen del bullet de cabecera de módulo: `"ICC Módulo {nombre} — Posición X de Y | Puntuación del módulo: Z"`. Solo aparecen en la tabla si al menos un periodo tiene dato — en meses sin ranking ICC muestran "—".
+
+**CX total (/8)** se extrae de la línea `Total: X/8 puntos` del Cuadro de Calidad CX, que es un párrafo Normal previo al bloque de positivos/mejoras. El parser captura estos párrafos en `cur_sec["neutro"]` y `extract_evolution_metrics` los incluye en el texto combinado de búsqueda. Si el mes no tiene datos CX, muestra "—". Objetivo: ≥7.
 
 Los objetivos de productividad específicos por instalación (Ayala 105%, Rivas VW 89%, chapa 120%) se aplican automáticamente a la columna Objetivo.
 

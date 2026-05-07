@@ -55,6 +55,7 @@ EVO_METRICS_ASESOR = [
     ("Full/Long Drive",  r'Full/Long Drive:\s*(\d+)\s*operaciones',          True),
     ("Fidelidad (%)",    r'Fidelidad:\s*([\d,.]+)%',                        True),
     ("Horch Lauden",     r'Horch Lauden:\s*posici[oó]n\s*(\d+)',             False),
+    ("CX total (/8)",   r'Total:\s*(\d+)/8\s*puntos',                      True),
     ("Score ONE",        r'Score SEM:\s*([\d,]+)',                           True),
     ("Service CAM (%)",  r'Service CAM Acum\.:\s*(\d+)%',                   True),
     ("Diferidos (%)",    r'Diferidos Acum\.:\s*(\d+)%',                     True),
@@ -74,6 +75,7 @@ EVO_METRICS_JT_MECANICA = [
     ("Var Rec 2A (%)",     r'Variaci[oó]n recambios.+?([+\-]?[\d,.]+)%',    True),
     ("Var MO 2A (%)",      r'Variaci[oó]n mano de obra.+?([+\-]?[\d,.]+)%', True),
     ("Horch Lauden",       r'Horch Lauden:\s*posici[oó]n\s*(\d+)',           False),
+    ("CX total (/8)",     r'Total:\s*(\d+)/8\s*puntos',                     True),
     # ICC módulos
     ("ICC posición global",  r'ICC global:\s*posici[oó]n\s*(\d+)',           False),
     ("ICC Proactividad",     _icc("Proactividad"),                           True),
@@ -82,6 +84,7 @@ EVO_METRICS_JT_MECANICA = [
     ("ICC Recursos",         _icc("Recursos"),                               True),
     ("ICC Carrocería",       _icc("Carrocer"),                               True),
     ("ICC Personas",         _icc("Personas"),                               True),
+    ("CX total (/8)",       r'Total:\s*(\d+)/8\s*puntos',                   True),
     # ONE
     ("Score ONE",          r'Score SEM:\s*([\d,]+)',                         True),
     ("Service CAM (%)",    r'Service CAM Acum\.:\s*(\d+)%',                 True),
@@ -95,6 +98,7 @@ EVO_METRICS_JT_CHAPA = [
     ("Var Rec 2A (%)",     r'Variaci[oó]n recambios.+?([+\-]?[\d,.]+)%',    True),
     ("Var MO 2A (%)",      r'Variaci[oó]n mano de obra.+?([+\-]?[\d,.]+)%', True),
     ("Horch Lauden",       r'Horch Lauden:\s*posici[oó]n\s*(\d+)',           False),
+    ("CX total (/8)",     r'Total:\s*(\d+)/8\s*puntos',                     True),
     # ICC módulos aplicables a chapa
     ("ICC posición global",  r'ICC global:\s*posici[oó]n\s*(\d+)',           False),
     ("ICC Carrocería",       _icc("Carrocer"),                               True),
@@ -110,6 +114,7 @@ EVO_METRICS_INDUSTRIALES = [
     ("ICC Recursos",         _icc("Recursos"),                               True),
     ("ICC Carrocería",       _icc("Carrocer"),                               True),
     ("ICC Personas",         _icc("Personas"),                               True),
+    ("CX total (/8)",       r'Total:\s*(\d+)/8\s*puntos',                   True),
     # ONE
     ("Score ONE",          r'Score SEM:\s*([\d,]+)',                         True),
     ("Service CAM (%)",    r'Service CAM Acum\.:\s*(\d+)%',                 True),
@@ -126,6 +131,7 @@ EVO_OBJ = {
         "Full/Long Drive":  "11,1 ops",
         "Fidelidad (%)":    "63,48%",
         "Horch Lauden":     "<20",
+        "CX total (/8)":   "≥7",
         "Score ONE":        "6,2",
         "Service CAM (%)":  "8%",
         "Diferidos (%)":    "15%",
@@ -139,6 +145,7 @@ EVO_OBJ = {
         "Var Rec 2A (%)":      ">8%",
         "Var MO 2A (%)":       ">6%",
         "Horch Lauden":        "<20",
+        "CX total (/8)":      "≥7",
         "ICC posición global": "—",
         "ICC Proactividad":    "—",
         "ICC Digital":         "—",
@@ -157,6 +164,7 @@ EVO_OBJ = {
         "Var Rec 2A (%)":      ">8%",
         "Var MO 2A (%)":       ">6%",
         "Horch Lauden":        "<20",
+        "CX total (/8)":      "≥7",
         "ICC posición global": "—",
         "ICC Carrocería":      "—",
         "ICC Personas":        "—",
@@ -169,6 +177,7 @@ EVO_OBJ = {
         "ICC Recursos":        "—",
         "ICC Carrocería":      "—",
         "ICC Personas":        "—",
+        "CX total (/8)":      "≥7",
         "Score ONE":           "7,3",
         "Service CAM (%)":     "8%",
         "Diferidos (%)":       "15%",
@@ -182,6 +191,7 @@ EVO_BLOCKS = {
         ("Proactividad comercial", ["Desgaste total", "Posición ranking", "Full/Long Drive", "Fidelidad (%)"]),
         ("Calidad",                ["CAL1SEM"]),
         ("Horch Lauden",           ["Horch Lauden"]),
+        ("Cuadro CX",              ["CX total (/8)"]),
         ("ONE KVPS",               ["Score ONE", "Service CAM (%)", "Diferidos (%)", "Multimedia"]),
     ],
     "jt_mecanica": [
@@ -193,6 +203,7 @@ EVO_BLOCKS = {
         ("Carrocería",             ["ICC Carrocería"]),
         ("Personas",               ["ICC Personas"]),
         ("Rankings de marca",      ["ICC posición global", "Horch Lauden"]),
+        ("Cuadro CX",              ["CX total (/8)"]),
         ("ONE KVPS",               ["Score ONE", "Service CAM (%)", "Diferidos (%)", "Multimedia"]),
     ],
     "jt_chapa": [
@@ -202,6 +213,7 @@ EVO_BLOCKS = {
         ("Carrocería",             ["ICC Carrocería"]),
         ("Personas",               ["ICC Personas"]),
         ("Rankings de marca",      ["ICC posición global", "Horch Lauden"]),
+        ("Cuadro CX",              ["CX total (/8)"]),
     ],
     "industriales": [
         ("Proactividad comercial", ["ICC Proactividad"]),
@@ -211,6 +223,7 @@ EVO_BLOCKS = {
         ("Carrocería",             ["ICC Carrocería"]),
         ("Personas",               ["ICC Personas"]),
         ("Rankings de marca",      ["ICC posición global"]),
+        ("Cuadro CX",              ["CX total (/8)"]),
         ("ONE KVPS",               ["Score ONE", "Service CAM (%)", "Diferidos (%)", "Multimedia"]),
     ],
 }
@@ -295,6 +308,8 @@ def parse_word(path):
                 cur_sec["sin_datos"] = True
         elif cur_sec is not None and bloque and sname in ("List Bullet", "List Paragraph", "Normal"):
             cur_sec[bloque].append(txt)
+        elif cur_sec is not None and not bloque and sname == "Normal":
+            cur_sec["neutro"].append(txt)
 
     tabla_tareas = None
     for tbl in doc.tables:
@@ -401,6 +416,8 @@ def extract_evolution_metrics(sections, tipo):
     """Extrae métricas clave de los bullets ya parseados del Word."""
     all_text = []
     for sec in sections:
+        for b in sec.get("neutro", []):
+            all_text.append(b)
         for b in sec.get("positivo", []):
             all_text.append(b)
         for b in sec.get("mejorar", []):
