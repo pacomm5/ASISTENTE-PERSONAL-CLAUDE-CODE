@@ -306,15 +306,15 @@ def crear_word(titulo, subtitulo, secciones, path):
             doc.add_paragraph("Sin datos registrados")
 
         if "tareas" in sec:
-            tbl = doc.add_table(rows=1, cols=4)
+            tbl = doc.add_table(rows=1, cols=5)
             tbl.style = "Table Grid"
             hdrs = tbl.rows[0].cells
-            for i, h2 in enumerate(["Tarea","Responsable","Fecha límite","Grado de cumplimentación"]):
+            for i, h2 in enumerate(["Tarea","Responsable","Fecha límite","Observaciones","Grado de cumplimentación"]):
                 hdrs[i].text = h2
                 for r2 in hdrs[i].paragraphs[0].runs: r2.bold = True
             for t in sec["tareas"]:
                 row = tbl.add_row().cells
-                row[0].text = t; row[1].text = ""; row[2].text = ""; row[3].text = ""
+                row[0].text = t; row[1].text = ""; row[2].text = ""; row[3].text = ""; row[4].text = ""
 
         doc.add_paragraph()
 
