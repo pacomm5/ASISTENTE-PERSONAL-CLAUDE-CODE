@@ -132,6 +132,115 @@ IJT = {
     "pericles_vara_chapa":     {"icc_pos":92, "cal1":6.00,"prod":119.70,"obj_prod":120,"var_rec":-28.45,"var_mo":-5.28,"horch":32},
 }
 
+# CX Instalaciones Abril 2026
+_AU_REF = {
+    "CEM Q4":       "0pts <4,60 | 1pt ≥4,60 | 2pts ≥4,80",
+    "EC28":         "0pts >5% | 1pt ≤5% | 2pts ≤1%",
+    "TRS":          "0pts <80% | 1pt ≥80% | 2pts ≥90%",
+    "Conectividad": "0pts <25% | 1pt ≥25% | 2pts ≥45%",
+}
+_VW_REF = {
+    "GBP":          "0pts <80% | 1pt ≥80% | 2pts 100%",
+    "EC28":         "0pts >5% | 1pt ≤5% | 2pts ≤3%",
+    "Conectividad": "0pts <25% | 1pt ≥25% | 2pts ≥40%",
+    "Club VW":      "0pts <3% | 1pt ≥3% | 2pts ≥6%",
+}
+_LCV_REF = {
+    "Sat. Gral":        "0pts <4,52 | 1pt ≥4,52 | 2pts ≥4,62",
+    "EC28":             "0pts >5% | 1pt ≤5% | 2pts ≤3%",
+    "Conectividad":     "0pts <10% | 1pt ≥10% | 2pts ≥25%",
+    "Servicios Rápidos":"0pts <40% | 1pt ≥40% | 2pts ≥45%",
+}
+
+CX_APR = {
+    "51AQ1 AU": {"label":"Rivas Audi (51AQ1 AU) — Audi Service", "total":5, "kpis":[
+        ("Satisfacción General (CEM Q4)", "4,69",    1, _AU_REF["CEM Q4"]),
+        ("Medidas de Servicio (EC28)",    "0,00%",   2, _AU_REF["EC28"]),
+        ("Información Proceso (TRS)",     "62,50%",  0, _AU_REF["TRS"]),
+        ("Conectividad Posventa",         "47,76%",  2, _AU_REF["Conectividad"]),
+    ]},
+    "51AQ2 AU": {"label":"Ayala (51AQ2 AU) — Audi Service", "total":7, "kpis":[
+        ("Satisfacción General (CEM Q4)", "4,91",    2, _AU_REF["CEM Q4"]),
+        ("Medidas de Servicio (EC28)",    "0,00%",   2, _AU_REF["EC28"]),
+        ("Información Proceso (TRS)",     "82,61%",  1, _AU_REF["TRS"]),
+        ("Conectividad Posventa",         "47,30%",  2, _AU_REF["Conectividad"]),
+    ]},
+    "51AQ3 AU": {"label":"Canarias (51AQ3 AU) — Audi Service", "total":5, "kpis":[
+        ("Satisfacción General (CEM Q4)", "4,80",    2, _AU_REF["CEM Q4"]),
+        ("Medidas de Servicio (EC28)",    "1,72%",   1, _AU_REF["EC28"]),
+        ("Información Proceso (TRS)",     "87,50%",  1, _AU_REF["TRS"]),
+        ("Conectividad Posventa",         "38,71%",  1, _AU_REF["Conectividad"]),
+    ]},
+    "31523 AU": {"label":"Moncloa Audi (31523 AU) — Audi Service", "total":4, "kpis":[
+        ("Satisfacción General (CEM Q4)", "4,77",    1, _AU_REF["CEM Q4"]),
+        ("Medidas de Servicio (EC28)",    "0,00%",   2, _AU_REF["EC28"]),
+        ("Información Proceso (TRS)",     "60,00%",  0, _AU_REF["TRS"]),
+        ("Conectividad Posventa",         "40,74%",  1, _AU_REF["Conectividad"]),
+    ]},
+    "0311Q VW": {"label":"Vara (0311Q VW) — VW Turismos", "total":6, "kpis":[
+        ("Google Business Profile (GBP)", "100,00%", 2, _VW_REF["GBP"]),
+        ("Medidas de Servicio (EC28)",    "0,97%",   2, _VW_REF["EC28"]),
+        ("Conectividad Posventa",         "10,90%",  0, _VW_REF["Conectividad"]),
+        ("Club Volkswagen Postventa",     "6,08%",   2, _VW_REF["Club VW"]),
+    ]},
+    "30070 VW": {"label":"Rivas VW (30070 VW) — VW Turismos", "total":6, "kpis":[
+        ("Google Business Profile (GBP)", "100,00%", 2, _VW_REF["GBP"]),
+        ("Medidas de Servicio (EC28)",    "0,50%",   2, _VW_REF["EC28"]),
+        ("Conectividad Posventa",         "16,18%",  0, _VW_REF["Conectividad"]),
+        ("Club Volkswagen Postventa",     "7,86%",   2, _VW_REF["Club VW"]),
+    ]},
+    "31523 VW": {"label":"Moncloa VW (31523 VW) — VW Turismos", "total":5, "kpis":[
+        ("Google Business Profile (GBP)", "100,00%", 2, _VW_REF["GBP"]),
+        ("Medidas de Servicio (EC28)",    "1,35%",   2, _VW_REF["EC28"]),
+        ("Conectividad Posventa",         "7,32%",   0, _VW_REF["Conectividad"]),
+        ("Club Volkswagen Postventa",     "4,58%",   1, _VW_REF["Club VW"]),
+    ]},
+    "30070 LCV": {"label":"Industriales (30070 LCV) — VW Comerciales", "total":3, "kpis":[
+        ("Satisfacción General (CEM)",    "4,47",    0, _LCV_REF["Sat. Gral"]),
+        ("Medidas de Servicio (EC28)",    "9,52%",   0, _LCV_REF["EC28"]),
+        ("Conectividad Posventa",         "17,48%",  1, _LCV_REF["Conectividad"]),
+        ("Servicios Rápidos (en el día)", "65,85%",  2, _LCV_REF["Servicios Rápidos"]),
+    ]},
+}
+
+# Mapeo key → códigos CX de instalación
+CX_CODES = {
+    # Asesores
+    "alvaro":             ("51AQ1 AU",),
+    "estefania":          ("51AQ1 AU",),
+    "codru":              ("51AQ1 AU",),
+    "dennis":             ("51AQ1 AU",),
+    "alberto_martinez":   ("51AQ2 AU",),
+    "carlos_aguilar":     ("51AQ2 AU",),
+    "magan":              ("51AQ3 AU",),
+    "taboada":            ("51AQ3 AU",),
+    "alejandro":          ("51AQ3 AU",),
+    "jon":                ("51AQ3 AU",),
+    "javier_diaz":        ("0311Q VW",),
+    "jose_maria_vazquez": ("0311Q VW",),
+    "juan":               ("0311Q VW",),
+    "raul_munoz":         ("31523 AU", "31523 VW"),
+    "jose_maria":         ("31523 AU", "31523 VW"),
+    "guillermo":          ("30070 VW", "30070 LCV"),
+    "javier_pina":        ("30070 VW", "30070 LCV"),
+    "nuria":              ("30070 VW", "30070 LCV"),
+    # Jefes mecánica
+    "emilio_rivas_audi":       ("51AQ1 AU",),
+    "alberto_martinez_ayala":  ("51AQ2 AU",),
+    "izquierdo_canarias":      ("51AQ3 AU",),
+    "jose_maria_moncloa_audi": ("31523 AU",),
+    "jose_maria_moncloa_vw":   ("31523 VW",),
+    "carlos_vara":             ("0311Q VW",),
+    "fernando_rivas_vw":       ("30070 VW",),
+    # Jefes chapa
+    "luis_ramos_rivas_a_chapa": ("51AQ1 AU",),
+    "luis_ramos_rivas_w_chapa": ("30070 VW",),
+    "pericles_canarias_chapa":  ("51AQ3 AU",),
+    "pericles_vara_chapa":      ("0311Q VW",),
+    # Industriales
+    "fernando_industriales":    ("30070 LCV",),
+}
+
 # Tareas pendientes de marzo (todas con grado vacío → se arrastran todas)
 TAREAS_PREV = {
     "alberto_martinez":       ["Utilizar el Laser de desgaste","Full drive","Mirar condiciones de la copa horch. Esta en el portal interno","Kpis de one arriba indicados."],
@@ -302,7 +411,21 @@ def crear_word(titulo, subtitulo, secciones, path):
             for b in sec["mejorar"]:
                 doc.add_paragraph(b, style="List Bullet")
 
-        if not sec.get("positivo") and not sec.get("mejorar") and "tareas" not in sec:
+        for blk in sec.get("cx_blocks", []):
+            doc.add_paragraph(blk["label"])
+            doc.add_paragraph(f"Total: {blk['total']}/8 puntos")
+            if blk.get("positivo"):
+                p2 = doc.add_paragraph(); r = p2.add_run("Puntos positivos")
+                r.bold = True; r.font.color.rgb = RGBColor(0x1A, 0x7A, 0x3C)
+                for b in blk["positivo"]:
+                    doc.add_paragraph(b, style="List Bullet")
+            if blk.get("mejorar"):
+                p3 = doc.add_paragraph(); r = p3.add_run("Puntos a mejorar")
+                r.bold = True; r.font.color.rgb = RGBColor(0xC0, 0x39, 0x2B)
+                for b in blk["mejorar"]:
+                    doc.add_paragraph(b, style="List Bullet")
+
+        if not sec.get("positivo") and not sec.get("mejorar") and "tareas" not in sec and not sec.get("cx_blocks"):
             doc.add_paragraph("Sin datos registrados")
 
         if "tareas" in sec:
@@ -355,6 +478,20 @@ def sec_one_asesor(key):
         return {"nombre":"ONE KVPS","positivo":[],"mejorar":[]}
     pos, mej = one_bullets(OAS[key], ONE_AM, "Asesor")
     return {"nombre":"ONE KVPS","positivo":pos,"mejorar":mej}
+
+def _cx_block(code):
+    d = CX_APR[code]
+    pos, mej = [], []
+    for name, val, pts, ref in d["kpis"]:
+        bullet = f"{name}: {val} — {pts}/2 pts  |  Referencia: {ref}"
+        (pos if pts == 2 else mej).append(bullet)
+    return {"label": d["label"], "total": d["total"], "positivo": pos, "mejorar": mej}
+
+def sec_cx_for(key):
+    codes = CX_CODES.get(key, ())
+    if not codes:
+        return {"nombre": "Cuadro de Calidad CX 2026", "positivo": [], "mejorar": []}
+    return {"nombre": "Cuadro de Calidad CX 2026", "cx_blocks": [_cx_block(c) for c in codes]}
 
 def sec_one_inst(inst_key, label_extra=""):
     if inst_key not in OINST:
@@ -445,7 +582,7 @@ def informe_asesor(key, titulo, subtitulo):
         {"nombre":"Procesos","positivo":[],"mejorar":[]},
         {"nombre":"Recursos generales","positivo":[],"mejorar":[]},
         sec_horch_asesor(key),
-        {"nombre":"Cuadro de Calidad CX 2026","positivo":[],"mejorar":[]},
+        sec_cx_for(key),
         sec_one_asesor(key),
         tareas_sec(key),
     ]
@@ -464,7 +601,7 @@ def informe_jt_mecanica(key, titulo, subtitulo, one_key):
         {"nombre":"Carrocería","positivo":[],"mejorar":[]},
         {"nombre":"Personas","positivo":[],"mejorar":[]},
         sec_rankings_jt(key),
-        {"nombre":"Cuadro de Calidad CX 2026","positivo":[],"mejorar":[]},
+        sec_cx_for(key),
         sec_one_inst(one_key),
         tareas_sec(key),
     ]
@@ -478,7 +615,7 @@ def informe_jt_chapa(key, titulo, subtitulo):
         {"nombre":"Carrocería","positivo":[],"mejorar":[]},
         {"nombre":"Personas","positivo":[],"mejorar":[]},
         sec_rankings_jt(key),
-        {"nombre":"Cuadro de Calidad CX 2026","positivo":[],"mejorar":[]},
+        sec_cx_for(key),
         tareas_sec(key),
     ]
     fname = f"informe_seguimiento_{key}_{PERIODO}.docx"
@@ -494,7 +631,7 @@ def informe_jt_industriales(key, titulo, subtitulo):
         {"nombre":"Recursos generales","positivo":[],"mejorar":[]},
         {"nombre":"Carrocería","positivo":[],"mejorar":[]},
         {"nombre":"Personas","positivo":[],"mejorar":[]},
-        {"nombre":"Cuadro de Calidad CX 2026","positivo":[],"mejorar":[]},
+        sec_cx_for(key),
         sec_one_inst("rivas_vw"),  # 30070 mismo código
         tareas_sec(key),
     ]
